@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CHAT</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.6.1/socket.io.js"></script>
+</head>
+<body>
+    <input type="text" name="" id="message">
+    <button onclick="send_message()">send</button>
+
+    <p>No message removed</p>
+    <script>
+        const socket = io('http://localhost:3001');
+        socket.on('connection');
+
+        function send_message(){
+            socket.emit('message', message.value);
+        }
+
+        socket.on('message', (data)=> {
+            console.log('test' + data);
+            const history = document.querySelector('p');
+            console.log(history);
+            history.innerHTML = history.innerHTML + data + '<br>';
+        });
+    </script>
+</body>
+</html>

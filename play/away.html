@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    body{
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100vh;
+      display: grid;
+      place-content: center;
+    }
+
+    .area{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      height: 100%;
+      border: 1px solid black;
+      padding: 10px;
+    }
+
+    .item{
+      width: 100px;
+      height: 100px;
+      background-color: blue;
+      border-radius: 50%;
+      transition: all 0.7s ease;
+      position: relative;
+    }
+
+  </style>
+</head>
+<body>
+  <div class="area">
+    <div class="item"></div>
+    <div class="item"></div>
+    <div class="item"></div>
+  </div>
+
+  <script>
+    const elements = document.querySelectorAll('.item');
+    elements.forEach((element) => {
+      document.addEventListener("mousemove", (e) => {
+        const mouse_pos = [e.clientX, e.clientY];
+        
+        const element_xy = element.getBoundingClientRect();
+        const element_x = element_xy.left + element_xy.width / 2;
+        const element_y = element_xy.top + element_xy.height / 2;
+
+        
+        const distance_x = element_x - mouse_pos[0];
+        const distance_y = element_y - mouse_pos[1];
+        const distance = Math.sqrt(Math.pow(distance_x,2) + Math.pow(distance_y,2));
+
+        const max_distance = 100;
+        element.innerHTML = distance.toFixed(1) + "<br>d_x: " + distance_x.toFixed(1) + "<br>d_y: " + distance_y.toFixed(1);
+
+        if(distance < max_distance && distance > 50){
+          element.style.backgroundColor = "red";
+
+          element.style.transform = `translate(${distance_x*0.5}px, ${distance_y*0.5}px)`;
+          
+        }else{
+          element.style.backgroundColor = "blue";
+          element.style.transform = "translate(0, 0)";
+        }
+        
+
+      });
+    });
+  </script>
+</body>
+</html>

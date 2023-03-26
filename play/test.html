@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        display: flex;
+        height: 100vh;
+      }
+
+      main {
+        border: 1px solid black;
+        padding: 20px;
+        margin: auto;
+      }
+      .item {
+        width: 100px;
+        height: 100px;
+        line-height: 100px;
+        background-color: blue;
+        border-radius: 50%;
+        text-align: center;
+        transition: all 0.1s ease;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <div class="item"></div>
+    </main>
+
+    <script>
+          const elements = document.querySelectorAll('.item');
+          elements.forEach((element) =>{
+            const element_xy = element.getBoundingClientRect();
+            const element_x = element_xy.left + element_xy.width / 2;
+            const element_y = element_xy.top + element_xy.height / 2;
+
+
+
+            element.addEventListener('mousemove', (mouse)=>{
+              element.style.backgroundColor="red";
+              const distance_x = element_x - mouse.clientX;
+              const distance_y = element_y - mouse.clientY;
+              const distance = Math.sqrt(Math.pow(distance_x,2) + Math.pow(distance_y,2));
+              element.innerHTML = distance.toFixed(0);
+              // if(distance < 150){
+              //   element.style.transform = `translate(${-distance_x}px, ${-distance_y}px)`;
+              // }else{
+              //   element.style.transform = `translate(0, 0)`;
+
+              // }
+
+              element.animate(
+                {
+                left: `${distance_x}px`,
+                top: `${distance_y}px`
+                }
+                ,{duration: 1000, fill: "forwards"}
+              );}
+            );
+
+
+            
+            // when mouse leave reset
+            element.addEventListener('mouseleave', (e) => {
+              element.style.backgroundColor = "blue";
+              element.style.transform = `translate(0, 0)`;
+              
+            });
+          });
+    </script>
+  </body>
+</html>

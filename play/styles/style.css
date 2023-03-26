@@ -1,0 +1,21 @@
+:root {
+  --main-color: #200848;
+  --main-color-rgb: 32, 8, 72;
+  --white: #d8c6ee;
+  --black: #181d31;
+  --black-rgb: 24, 29, 49;
+  --light-blue: #39dcfd;
+  --h1-size: 3rem;
+  --h2-size: 2rem;
+  --p-size: 1rem;
+  --logo-size: 2rem;
+  --box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25);
+  --radius: 16px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}

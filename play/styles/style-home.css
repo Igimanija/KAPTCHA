@@ -1,0 +1,116 @@
+* {
+  color: var(--white);
+}
+body {
+  background-color: rgba(var(--main-color-rgb), 0.92);
+  overflow-x: hidden;
+}
+main {
+  width: min(90%, 1400px);
+  display: flex;
+  justify-content: space-between;
+  margin: auto;
+  margin-top: 40px;
+  gap: 40px;
+}
+
+.game-container {
+  background-color: var(--main-color);
+  flex-basis: 75%;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  gap: 20px;
+  border-radius: 8px;
+  height: 100%;
+}
+
+.game-container > .start-container {
+  width: 100%;
+  display: flex;
+  gap: 20px;
+  justify-content: space-evenly;
+}
+
+.game-container > .start-container > button {
+  flex-basis: 50%;
+  height: 40px;
+  font-size: 26px;
+  border: 0;
+  border-radius: 4px;
+  background-color: var(--white);
+  color: var(--black);
+}
+
+.game-container > .table-info {
+  width: 100%;
+}
+
+.game-container > .table-info > p {
+  font-size: 2.2rem;
+}
+.game-container > .table-info > .games {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  font-size: 1.2rem;
+  border-radius: 8px;
+  padding: 20px 0;
+}
+.game-container > .table-info > .games > .game {
+  display: flex;
+  border-bottom: 1px solid var(--white);
+}
+
+.game-container > .table-info > .games > .game > button {
+  color: var(--black);
+}
+
+.game-container > .table-info > .games > :first-child {
+  border-bottom: 4px solid var(--white);
+  margin-bottom: 16px;
+}
+
+.game > * {
+  flex-basis: 20%;
+  padding:  0 8px;
+}
+
+.game > :nth-child(1) {
+  flex-basis: 60%;
+}
+.profile-container {
+  background-color: var(--main-color);
+  border-radius: 8px;
+  flex-basis: 25%;
+  padding: 20px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.profile-container > .profile-pic {
+  width: 100%;
+  aspect-ratio: 1/1;
+  border: 1px solid var(--white);
+  border-radius: 8px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.profile-container > .profile-info{
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+}
+
+.profile-container > .profile-info > .username {
+    font-size: 1.2rem;
+    text-align: center;
+}
+
+
+
+

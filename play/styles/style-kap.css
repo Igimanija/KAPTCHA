@@ -1,0 +1,108 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+  height: 100vh;
+  display: grid;
+  place-content: center;
+}
+
+.captcha {
+  width: min(100%, 340px);
+  margin: auto;
+  aspect-ratio: 1/1.5;
+  border: 1px solid black;
+  padding: 4px;
+  display: flex;
+  flex-direction: column;
+}
+
+.captcha > .question {
+  background-color: #2a76d9;
+  color: white;
+  flex-basis: 20%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  padding-left: 1.7rem;
+}
+
+.bar {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  flex-basis: 14%;
+}
+
+.bar > button {
+  flex-basis: 34%;
+  background-color: #2a76d9;
+  height: 70%;
+  margin-top: 10px;
+
+  border: 0;
+  color: white;
+  font-size: 1.1rem;
+  
+}
+
+.options {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  gap: 1.32%;
+  padding: 4px 0;
+  user-select: none;
+}
+
+.options > .item {
+    position: relative;
+  flex-basis: 24%;
+  aspect-ratio: 1/1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: inset 1px 1px black, inset -1px -1px black;
+    transition: all 0.5s ease;
+}
+
+.options > .item > img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  user-drag: none;  
+   user-select: none;
+   -moz-user-select: none;
+   -webkit-user-drag: none;
+   -webkit-user-select: none;
+   -ms-user-select: none;
+}
+
+.checked {
+    content: '✔';
+    top: -3px;
+    right: -3px;
+    background-color: #2a76d9;
+    border-radius: 50%;
+    height: 16px;
+    width: 16px;
+    position: absolute;
+    text-align: center;
+    line-height: 16px;
+    color:white;
+    font-size: 10px;
+    display: none;
+}
+
+.show-checked{
+    display: block;
+}
+
+.item-scale{
+    transform: scale(0.85);
+}
+

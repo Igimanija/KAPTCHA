@@ -1,0 +1,48 @@
+@import "style.css";
+
+body {
+  display: flex;
+  height: 100vh;
+  background-color: var(--white);
+}
+
+.info {
+  flex-basis: 35%;
+  height: 100%;
+  border-right: 1px solid var(--black);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-left: 20px;
+  gap: 20px;
+}
+
+.info > h1 {
+  font-size: 4rem;
+}
+
+.info > .links {
+  border-radius: 40px;
+  border: 1px solid black;
+  padding: 10px 20px;
+  display: flex;
+  width: fit-content;
+  gap: 20px;
+}
+
+.info > .links > a {
+  text-decoration: none;
+  transition: 0.4s all ease;
+  font-size: 0.8rem;
+}
+
+.info > .links > a:hover {
+    color: blue;
+    text-decoration: underline;
+}
+
+
+.game {
+  flex-basis: 65%;
+  background-color: blue;
+}
