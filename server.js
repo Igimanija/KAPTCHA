@@ -9,7 +9,7 @@ const { Socket } = require("engine.io");
 const app = express();
 const server = require('http').createServer(app);
 const io = require('socket.io')(server, {cors: {origin: '*'}});
-
+const server_room=[];
 
 server.listen(3001, ()=>{
     console.log('Server running...');
@@ -18,7 +18,7 @@ server.listen(3001, ()=>{
 var conn = mysql.createConnection({
     host: "localhost",
     user: "root",
-    password: "rootroot",
+    password: "root",
     database: "secure_wa"
 });
 
@@ -56,3 +56,40 @@ io.on('connection', (socket)=>{
         socket.broadcast.emit('message', data);
     });
 });
+
+
+app.post("/rooms", (req, res) => {
+        const {username}=req.body;
+        if(server_room.includes(username)){
+            res.status(400)
+
+            res.send({"error":"Room already exists"})
+            return;
+        }
+        server_room.push(username);
+        res.send({"success":"Room created"})
+})
+
+app.get("/rooms/", (req, res) => {
+    res.send(server_room);
+})
+
+app.delete("/rooms/:username",(req, res) => {
+    const {username}=req.params;
+    if(!server_room.includes(username)){
+        res.status(400)
+        res.send({"error":"Room does not exists"})
+        return;
+    }
+   const roomDelete= server_room.splice(server_room.indexOf(username),1);
+    res.send({"success":"Room deleted "+roomDelete})
+})
+
+
+/*
+* create room CRUD done
+* START GAME call the questions from the db
+* after each question each question is popped from the result array
+* the users will only be able to communicate with people they are against
+* every user that is playing will be the blue while the opponent will be the red
+*/
