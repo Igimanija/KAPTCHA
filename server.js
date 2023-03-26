@@ -10,6 +10,8 @@ const app = express();
 const server = require('http').createServer(app);
 const io = require('socket.io')(server, {cors: {origin: '*'}});
 
+var questionArr = [];
+
 
 server.listen(3001, ()=>{
     console.log('Server running...');
@@ -18,13 +20,14 @@ server.listen(3001, ()=>{
 var conn = mysql.createConnection({
     host: "localhost",
     user: "root",
-    password: "rootroot",
+    password: "root",
     database: "secure_wa"
 });
 
 conn.connect(function(error) {
     if(error) throw error;
     console.log("Connected");
+    setupQA();
 });
 
 app.use(express.static("./"));
@@ -48,6 +51,16 @@ app.post("/login", (req, res) => {
     });
 });
 
+app.get("/start", (req, res) => {
+    //console.log(questionArr);
+    res.json(getNewQ([-1]));
+});
+
+app.get("/newQuestion", (req,res) => {
+    let usedNum = req.body.numArr;
+    res.json(getNewQ([usedNum]));
+});
+
 
 io.on('connection', (socket)=>{
     console.log('socket id: ' + socket.id);
@@ -56,3 +69,34 @@ io.on('connection', (socket)=>{
         socket.broadcast.emit('message', data);
     });
 });
+
+function getNewQ(alreadyUsedID){
+    var boolean = true;
+    let number;
+
+    while(boolean){
+        number = Math.floor(Math.random() * (questionArr.length - 1 + 1) + 1);
+        
+        for(var i = 0; i<alreadyUsedID.length;i++){
+            var element = alreadyUsedID[i];
+            //console.log("Number in arr " + element + ", random number " + number);
+            if(element == number){
+                //console.log("true");
+                boolean = true;
+                break;
+            }
+            boolean = false;
+        }
+    }
+
+    return questionArr[number-1];
+
+}
+
+function setupQA(){
+    conn.query("Select * from questions", function (error, result) {
+        if(error) throw error;
+        //console.log(result);
+        questionArr = result;
+    });
+}
