@@ -1,0 +1,87 @@
+@import "style.css";
+
+body{
+    width: 100%;
+    height: 100vh;
+    display: flex;
+}
+
+main{
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    width: min(100%, 900px);
+}
+
+.game_room {
+    display: flex;
+    flex-direction: column;
+    flex-basis: 60%;
+    gap: 20px;
+    border: 1px solid black;
+    border-radius: 15px;
+    padding: 40px;
+    height: 100%;
+}
+
+.game_room > .room {
+    display: flex;
+    justify-content: space-between;
+    width: min(450px, 100%);
+    height: 40px;
+    background-color: black;
+    color: white;
+    padding: 10px;
+    border-radius: 30px;
+}
+
+.game_room > p {
+    margin-left: 10px;
+}
+.room > * {
+    color: white;
+}
+
+.room > button {
+    color: white;
+    height: 40px;
+    width: 80px;
+    margin: -10px;
+    border: 1px solid difference;
+    border-radius: 30px;
+    background-color: transparent;
+}
+
+.user_info {
+    border: 1px solid black;
+    height: 100%;
+    padding: 40px;
+    flex-basis: 35%;
+}
+
+.user_info > .trophies {
+    padding: 10px;
+    border: 1px solid black;
+    aspect-ratio: 1/1;
+    position: relative;
+    display: flex;
+    margin-bottom: 16px;
+}
+
+.user_info > .trophies > .points {
+    margin: auto;
+    font-size: 120px;
+    font-weight: 1000;
+}
+
+.user_info > .trophies>:first-child {
+    position: absolute;
+}
+
+#log_out{
+    padding: 10px 30px;
+    background-color: black;
+    height: fit-content;
+    color: white;   
+    border-radius: 0 0 0 30px; 
+}
