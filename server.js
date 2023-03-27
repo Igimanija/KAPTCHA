@@ -4,12 +4,15 @@ var mysql = require("mysql2");
 var crypto = require('crypto');
 const { Socket } = require("engine.io");
 
-
+const fs = require("fs");
+const path = require("path");
 
 const app = express();
 const server = require('http').createServer(app);
 const io = require('socket.io')(server, {cors: {origin: '*'}});
 const server_room=[];
+const room_ids = new Map();
+// app.use(express.static("public"));
 
 server.listen(3001, ()=>{
     console.log('Server running...');
@@ -93,3 +96,51 @@ app.delete("/rooms/:username",(req, res) => {
 * the users will only be able to communicate with people they are against
 * every user that is playing will be the blue while the opponent will be the red
 */
+
+
+
+
+
+
+app.get("/", function (req, res) {
+  res.sendFile(__dirname + "/index.html");
+});
+
+app.get("/chatroom", function (req, res) {
+  res.sendFile(__dirname + "/chatroom.html");
+});
+
+
+
+// app.get('/mess.js', function(req, res) {
+//     res.sendFile(__dirname + '/mess.js');
+// });
+
+app.get("/chatroom.html/:id", (req, res) => {
+  const id = req.params.id;
+  const filePath = path.join(__dirname, "/chatroom.html");
+  fs.readFile(filePath, "utf-8", (err, fileContent) => {
+    if (err) {
+      console.error(err);
+      res.status(500).send("Error reading chatroom");
+      return;
+    }
+    const modified = fileContent.replace("{{id}}", id);
+    res.send(modified);
+  });
+});
+
+io.on("connection", (socket) => {
+  console.log("a user connected");
+
+  socket.on("message", (message, room_id) => {
+    console.log(room_id, ": ", message);
+    io.emit("message", message, room_id);
+  });
+
+  socket.on("disconnect", () => {
+    console.log("a user disconnected");
+  });
+});
+
+
