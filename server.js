@@ -61,8 +61,8 @@ io.on('connection', (socket)=>{
 });
 
 
-app.post("/rooms", (req, res) => {
-        const {username}=req.body;
+app.post("/create-rooms/:username", (req, res) => {
+        const {username}=req.params;
         if(server_room.includes(username)){
             res.status(400)
 
@@ -73,11 +73,11 @@ app.post("/rooms", (req, res) => {
         res.send({"success":"Room created"})
 })
 
-app.get("/rooms/", (req, res) => {
+app.get("/get-rooms", (req, res) => {
     res.send(server_room);
 })
 
-app.delete("/rooms/:username",(req, res) => {
+app.delete("/delete-rooms/:username",(req, res) => {
     const {username}=req.params;
     if(!server_room.includes(username)){
         res.status(400)
@@ -106,8 +106,10 @@ app.get("/", function (req, res) {
   res.sendFile(__dirname + "/index.html");
 });
 
-app.get("/chatroom", function (req, res) {
-  res.sendFile(__dirname + "/chatroom.html");
+
+app.get("/lobby", function (req, res) {
+    res.sendFile(__dirname + "/lobby.html");
+    res.sendFile(__dirname + "/lobby.js");
 });
 
 
