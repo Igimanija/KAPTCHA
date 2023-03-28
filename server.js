@@ -42,7 +42,7 @@ const authenticate = (req, res, next) => {
                 console.log(error);
                 res.redirect("login.html");
             }else{
-                console.log(truetoken);
+                //console.log(truetoken);
                 next();
             }
         });
