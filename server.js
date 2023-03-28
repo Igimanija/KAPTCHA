@@ -33,6 +33,24 @@ conn.connect(function(error) {
     setupQA();
 });
 
+const authenticate = (req, res, next) => {
+    let token = req.cookies.token;
+    console.log(token);
+    if(token){
+        jwt.verify(token, "secure_secret", (error, truetoken) => {
+            if(error){
+                console.log(error);
+                res.redirect("login.html");
+            }else{
+                console.log(truetoken);
+                next();
+            }
+        });
+    }else{
+        res.redirect("login.html");
+    }
+}
+
 app.use(express.static("./"));
 app.use(parser.json());
 app.use(parser.urlencoded({extended:true}));
@@ -43,18 +61,22 @@ app.get("/", (req, res) => {
 }).listen(3000);
 
 app.post("/login", (req, res) => {
-    conn.query("Select username, password from users where username = ?", req.body.username, function (error, result) {
+    conn.query("Select * from users where username = ?", req.body.username, function (error, result) {
         if(error) throw error;
         //console.log(result);
         var testpass = crypto.createHash('sha256').update(req.body.password).digest('hex');
         if(result[0].password == testpass){
             let token = createJWT(result[0].username, result[0].trophies);
             res.cookie('token', token, {httpOnly: true, maxAge: expirytime * 1000});
-            res.redirect("lobby.html")
+            res.redirect("lobby");
         }else{
             res.redirect("login.html");
         }
     });
+});
+
+app.get("/lobby", authenticate, (req, res) => {
+    res.redirect("lobby.html");
 });
 
 app.get("/start", (req, res) => {
