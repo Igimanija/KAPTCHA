@@ -9,8 +9,11 @@ const { Socket } = require("engine.io");
 const app = express();
 const server = require('http').createServer(app);
 const io = require('socket.io')(server, {cors: {origin: '*'}});
+const cookieparser = require("cookie-parser");
+const jwt = require("jsonwebtoken");
 
 var questionArr = [];
+const expirytime = 4 * 60 * 60;
 
 
 server.listen(3001, ()=>{
@@ -33,6 +36,7 @@ conn.connect(function(error) {
 app.use(express.static("./"));
 app.use(parser.json());
 app.use(parser.urlencoded({extended:true}));
+app.use(cookieparser());
 
 app.get("/", (req, res) => {
     res.redirect("index.html");
@@ -44,6 +48,8 @@ app.post("/login", (req, res) => {
         //console.log(result);
         var testpass = crypto.createHash('sha256').update(req.body.password).digest('hex');
         if(result[0].password == testpass){
+            let token = createJWT(result[0].username, result[0].trophies);
+            res.cookie('token', token, {httpOnly: true, maxAge: expirytime * 1000});
             res.redirect("lobby.html")
         }else{
             res.redirect("login.html");
@@ -98,5 +104,11 @@ function setupQA(){
         if(error) throw error;
         //console.log(result);
         questionArr = result;
+    });
+}
+
+function createJWT(username, trophies){
+    return jwt.sign({username, trophies}, "secure_secret", {
+        expiresIn: expirytime
     });
 }
