@@ -7,24 +7,19 @@
     <title>Lobby</title>
     <link rel="stylesheet" href="./style/style-lobby.css">
 </head>
-<body>
+<body onload=getRooms()>
     <main>
         <div class="game_room">
-            <p>List of all open lobbies:</p>
-            <button onclick="createRoom()">Create Room</button>
-            <div class="room">
+            <div class="lobby-head">
+                <p>Lobby: </p>
+                <button class="lobbyBtn" onclick=createRoom()>Create Room</button>
+            </div>
+            <!-- <div class="room">
                 <p>Username 83</p>
                 <button>Play</button>
-            </div>
-            <div class="room">
-                <p>Username 83</p>
-                <button>Play</button>
-            </div>
-            <div class="room">
-                <p>Username 83</p>
-                
-                <button>Play</button>
-            </div>
+            </div>-->
+
+            <p id="errorP" style="color:red"></p>
         </div>
         
         <div class="user_info">

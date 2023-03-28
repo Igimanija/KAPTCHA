@@ -61,23 +61,23 @@ io.on('connection', (socket)=>{
 });
 
 
-app.post("/create-rooms/:username", (req, res) => {
+app.post("/rooms/:username", (req, res) => {
         const {username}=req.params;
         if(server_room.includes(username)){
             res.status(400)
-
-            res.send({"error":"Room already exists"})
+            res.send({"message":"Room already exists"})
             return;
         }
+        
         server_room.push(username);
-        res.send({"success":"Room created"})
+        res.send({"message":"Room created"})
 })
 
-app.get("/get-rooms", (req, res) => {
+app.get("/rooms", (req, res) => {
     res.send(server_room);
 })
 
-app.delete("/delete-rooms/:username",(req, res) => {
+app.delete("/rooms/:username",(req, res) => {
     const {username}=req.params;
     if(!server_room.includes(username)){
         res.status(400)
