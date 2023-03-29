@@ -65,7 +65,7 @@ router.delete("/rooms/:username", requireLogin, (req, res) => {
     res.send({ "success": "Room deleted " + roomDelete });
 });
 
-router.get("/chatroom.html/:id", requireLogin, (req, res) => {
+router.get("/chatroom/:id", requireLogin, (req, res) => {
     const id = req.params.id;
     const filePath = path.join(__dirname, "../public/chatroom.html");
     fs.readFile(filePath, "utf-8", (err, fileContent) => {
