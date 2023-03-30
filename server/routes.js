@@ -10,16 +10,34 @@ const server_room = [];
 const room_ids = new Map();
 
 router.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, '../public', 'index.html'));
+    res.sendFile(path.join(__dirname, '../public/views', 'index.html'));
 });
 
 router.get('/lobby', requireLogin, (req, res) => {
-    res.sendFile(path.join(__dirname, '../public', 'lobby.html'));
+    res.sendFile(path.join(__dirname, '../public/views', 'lobby.html'));
 });
 
 router.get('/login', requireLogout, (req, res) => {
-    res.sendFile(path.join(__dirname, '../public', 'login.html'));
+    res.sendFile(path.join(__dirname, '../public/views', 'login.html'));
 });
+
+router.get('/register',requireLogout, (req, res) => {
+    res.sendFile(path.join(__dirname, '../public/views','register.html'));
+});
+
+router.post('/register', requireLogout, (req, res) => {
+    const { username,email, password } = req.body;
+    db.query("Select username  from users where username = ?", req.body.username, function (error, result) {
+        if (result.length >0) {
+            res.redirect("/register");
+            return;
+        }
+        db.query("Insert into users (username, email, password) values (?,?,?)", [username, email, crypto.createHash('sha256').update(password).digest('hex')], function (error, result) {
+            if (error) throw error;
+            res.redirect("/login");
+        });
+    });
+})
 
 router.post("/login", requireLogout, (req, res) => {
     db.query("Select username, password from users where username = ?", req.body.username, function (error, result) {
