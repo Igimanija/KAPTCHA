@@ -4,8 +4,7 @@ const crypto = require('crypto');
 const fs = require("fs");
 const router = express.Router();
 const db = require('./db');
-const { requireLogin, requireLogout } = require('./middlewares');
-
+const { requireLogin, requireLogout, createJWT, authenticate} = require('./middlewares');
 const server_room = [];
 const room_ids = new Map();
 
@@ -13,7 +12,7 @@ router.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '../public', 'index.html'));
 });
 
-router.get('/lobby', requireLogin, (req, res) => {
+router.get('/lobby', authenticate, requireLogin,(req, res) => {
     res.sendFile(path.join(__dirname, '../public', 'lobby.html'));
 });
 
@@ -31,6 +30,8 @@ router.post("/login", requireLogout, (req, res) => {
         var testpass = crypto.createHash('sha256').update(req.body.password).digest('hex');
         if (result[0].password == testpass) {
             req.session.username = req.body.username;
+            let token = createJWT(result[0].username, result[0].trophies);
+            res.cookie('token', token, {httpOnly: true, maxAge: 4 * 60 * 60 * 1000});
             res.redirect("/lobby");
         } else {
             res.redirect("/login");

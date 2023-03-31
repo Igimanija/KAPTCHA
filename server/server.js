@@ -7,6 +7,8 @@ const session = require('./session');
 const routes = require('./routes');
 const attachSocketIO = require('./socket');
 const db = require('./db');
+const cookieparser = require("cookie-parser");
+// const { application } = require("express");
 
 const app = express();
 const server = http.createServer(app);
@@ -16,6 +18,7 @@ app.use(express.static(path.join(__dirname, '../public')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(session);
+app.use(cookieparser());
 app.use(routes);
 
 attachSocketIO(io);
