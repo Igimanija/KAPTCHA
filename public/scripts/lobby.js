@@ -1,4 +1,5 @@
 // const username = session.get('username');
+console.log('123test');
 const errorP = document.querySelector('#errorP')
 
 async function createRoom() {
@@ -19,6 +20,7 @@ async function createRoom() {
 }
 
 async function getRooms() {
+    console.log("test123");
     try {
         const response = await fetch('/rooms');
         const json = await response.json();
