@@ -73,7 +73,6 @@ router.post("/login", requireLogout, (req, res) => {
 });
 
 
-
 router.post("/rooms/:username", requireLogin, (req, res) => {
     const { username } = req.params;
     if (server_room.includes(username)) {
@@ -148,4 +147,27 @@ function accountInfo2(req) {
         });
     });
 }
+
+
+/**
+ * go into gameroom
+ */
+
+router.get('/room/:id', authenticate, requireLogin, async (req, res) => {
+    //const userInfo = await accountInfo2(req);
+    const filePath = path.join(__dirname, '../public/views', 'room.html');
+    res.sendFile(filePath);
+    /*fs.readFile(filePath, "utf-8", (err, fileContent) => {
+        if (err) {
+            console.error(err);
+            res.status(500).send("Error reading room");
+            return;
+        }
+        const modified = fileContent
+            .replace("{{username1}}", userInfo.username);
+        res.send(modified);
+    });*/
+});
+
+
 module.exports = router;

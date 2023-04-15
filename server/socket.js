@@ -1,19 +1,23 @@
 module.exports = (io) => {
-  io.on('connection', (socket) => {
-      console.log('socket id: ' + socket.id);
+    io.on('connection', (socket) => {
+        console.log('socket id: ' + socket.id);
 
-      socket.on('message', (data) => {
-          console.log(data);
-          socket.broadcast.emit('message', data);
-      });
+        socket.on('username', (username, room_id) => {
+           io.emit("message", username + " connected!", room_id); 
+        });
 
-      socket.on("message", (message, room_id) => {
-          console.log(room_id, ": ", message);
-          io.emit("message", message, room_id);
-      });
+        socket.on('message', (data) => {
+            console.log(data);
+            socket.broadcast.emit('message', data);
+        });
 
-      socket.on("disconnect", () => {
-          console.log("a user disconnected");
-      });
-  });
+        socket.on("message", (message, room_id) => {
+            console.log(room_id, ": ", message);
+            io.emit("message", message, room_id);
+        });
+
+        socket.on("disconnect", () => {
+            console.log("a user disconnected");
+        });
+    });
 };
