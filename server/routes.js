@@ -89,6 +89,8 @@ router.post("/rooms/:username", requireLogin, (req, res) => {
 router.get("/rooms", requireLogin, (req, res) => {
     res.send(server_room);
 });
+router.get("/rooms/:id", requireLogin, (req, res) => {
+});
 
 router.delete("/rooms/:username", requireLogin, (req, res) => {
     const { username } = req.params;
