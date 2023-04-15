@@ -4,13 +4,13 @@ const errorP = document.querySelector('#errorP')
 async function createRoom() {
     try {
         const user = await fetch("/accountInfo2");
-        const jsonUser = await user.json()
+        const jsonUser = await user.json();
         const response = await fetch('/rooms/' + jsonUser.username, {
             method: 'POST'
         })
-        const json = await response.json()
+        const json = await response.json();
         if (json.message !== "Room already exists") {
-            await getRooms();
+            location.href = "/room/" + jsonUser.username;
             return;
         }
         errorP.innerHTML = json.message
