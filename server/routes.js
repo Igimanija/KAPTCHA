@@ -13,7 +13,7 @@ router.get('/', (req, res) => {
 });
 
 router.get('/lobby', authenticate, requireLogin,(req, res) => {
-    res.sendFile(path.join(__dirname, '../public', 'lobby.html'))});
+    res.sendFile(path.join(__dirname, '../public/views', 'lobby.html'))});
 
 
 router.get('/login', requireLogout, (req, res) => {
