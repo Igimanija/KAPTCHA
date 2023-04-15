@@ -1,0 +1,90 @@
+.container{
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    overflow-y: hidden;
+    align-items: center;
+    justify-content: center;;
+}
+
+.register-image{
+    height: 100%;
+    width: 50%;
+    background-color: blue;
+}
+.register-form{
+    height: 100%;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+}
+.form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border:2px solid rgb(168, 165, 165);
+    border-radius: 10px;
+    padding: 20px;
+        background: whitesmoke;
+
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;}
+
+.register-form form{
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    padding:10px;
+}
+label{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+    margin-bottom: 16px;
+}
+
+input{
+    width: 100%;
+    min-width: 200px;
+    max-width: 250px;
+    height: 40px;
+    outline: none !important;
+    border: none;
+    border:2px solid rgb(168, 165, 165);
+    border-radius: 10px;
+    padding: 0 10px;
+
+}
+
+input::placeholder{
+    color: rgb(168, 165, 165);
+    font-weight: bold;
+    margin-left: 3px;
+    padding: 10px;
+}
+
+input:focus{
+    border-color: rgb(74, 24, 191);
+    outline: none;
+}
+.registerBtn{
+    outline: none;
+    border: none;
+    padding: 10px 20px;
+    background-color:black;
+    color: white;
+    border-radius: 20px;
+}
+
+@media (max-width:768px) {
+    .register-image{
+        display: none;
+    }
+    .container{
+        background-color: blue;
+    }
+}
