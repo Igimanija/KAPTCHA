@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,6 +8,7 @@
     <title>Lobby</title>
     <link rel="stylesheet" href="./style/style-lobby.css">
 </head>
+
 <body onload=getRooms()>
     <main>
         <div class="game_room">
@@ -21,14 +23,14 @@
 
             <p id="errorP" style="color:red"></p>
         </div>
-        
+
         <div class="user_info">
             <div class="trophies">
                 <p>Trophies:</p>
-                <p class="points" >83</p>
+                <p class="points">{{trophies}}</p>
             </div>
-            <p>Username: Lorem Ipsum</p>
-            <p>E-mail: 123@123.123</p>
+            <p>Username: {{username}}</p>
+            <p>E-mail: {{email}}</p>
         </div>
     </main>
 
@@ -39,4 +41,5 @@
 
     <script src="./scripts/lobby.js"></script>
 </body>
+
 </html>

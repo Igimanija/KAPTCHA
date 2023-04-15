@@ -1,10 +1,11 @@
 // const username = session.get('username');
-console.log('123test');
 const errorP = document.querySelector('#errorP')
 
 async function createRoom() {
     try {
-        const response = await fetch('/rooms/mr7287', {
+        const user = await fetch("/accountInfo2");
+        const jsonUser = await user.json()
+        const response = await fetch('/rooms/' + jsonUser.username, {
             method: 'POST'
         })
         const json = await response.json()
