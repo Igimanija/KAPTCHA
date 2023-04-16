@@ -7,7 +7,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.6.1/socket.io.js"></script>
   </head>
   <body>
-    <h1>Room id: {{id}}</h1>
+    <p>Player1: <span id="p1"></span></p>
+    <p>Trophies: <span id="t1"></span></p>
+    <p>Player2: <span id="p2"></span></p>
+    <p>Trophies: <span id="t2"></span></p>
     <textarea cols="30" rows="10" id="textarea"></textarea>
     <br />
     <input type="text" id="message_input" />
@@ -16,16 +19,13 @@
       const socket = io("http://localhost:3001");
       let jsonuser;
       socket.on("connection");
-        const user = fetch("/accountInfo2").then((response) => {
-            return response.json();
-        }).then((data) => {
-            jsonuser = data.username;
-            socket.emit("username", jsonuser, get_my_room());
-        });
-        function send() {
-            socket.emit("message", message_input.value, get_my_room());
-            message_input.value = "";
-        }
+
+      socket.emit("username", get_my_room());
+
+      function send() {
+        socket.emit("message", message_input.value, get_my_room());
+        message_input.value = "";
+      }
 
       function get_my_room() {
         const url = window.location.href;
@@ -33,11 +33,48 @@
         return url.slice(lastSlashIndex + 1);
       }
 
-      socket.on("message", (message, room_id) => {
-        if(room_id !== get_my_room()){
-            return;
+      socket.on("username", (game_room, room_id) => {
+        if (room_id !== get_my_room()) {
+          return;
         }
-        textarea.value += message + "\n";
+
+        p1.innerHTML = game_room.player1.username;
+        p2.innerHTML = game_room.player2.username;
+        t1.innerHTML = game_room.player1.trophies;
+        t2.innerHTML = game_room.player2.trophies;
+      });
+
+      socket.on("message", (message, room_id) => {
+        if (room_id !== get_my_room()) {
+          return;
+        }
+        textarea.value += message + '\n';
+      });
+
+      // socket.on("message", (message, room_id) => {
+      //   if (room_id !== get_my_room()) {
+      //     return;
+      //   }
+      //   textarea.value += message + "\n";
+      // });
+
+      // socket.on(('room-join', (players_info, room_id)=>{
+      //   if (room_id !== get_my_room()) {
+      //     return;
+      //   }
+      //   console.log(players_info);
+
+      //   // document.body.innerHTML = document.body.innerHTML.replace(/{{u1}}/, 'test123');
+      // }));
+
+      const onConfirmRefresh = function (event) {
+        event.preventDefault();
+        return (event.returnValue =
+          "You will forfeit the game and return to the lobby?");
+      };
+
+      window.addEventListener("beforeunload", onConfirmRefresh, {
+        capture: true,
       });
     </script>
   </body>

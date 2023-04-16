@@ -1,31 +1,7 @@
-game_rooms[
-    username_room:{
-        player1
-        player2
-        turn
-    }
-
-    username_room:{
-        player1
-        player2
-        turn
-    }
-]
+prikaz podataka playera
+magic button
 
 
-
-Map
-    player one
-    player two
-    turn
-
-player
-    username
-    trophies
-    current points
-
-- player can only get in rooms that exists
-- prikaz podataka od usera 
 
 
 
