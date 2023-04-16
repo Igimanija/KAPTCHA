@@ -12,7 +12,6 @@ module.exports = (io) => {
         });
 
         socket.on("message", (message, room_id) => {
-            console.log(room_id, ": ", message);
             io.emit("message", message, room_id);
         });
 
