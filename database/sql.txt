@@ -1,0 +1,8 @@
+alter table users add ingame smallint default 0;
+
+
+
+
+
+
+
