@@ -18,5 +18,11 @@ module.exports = (io) => {
             io.emit('logged', check, room_id);
         });
 
+
     });
+    function start_game(room_id){
+        const rand = Math.random() >= 0.5 ? 1 : 0;
+        game_rooms.get(req.params.id).turn = rand;
+        io.emit("start_game", req.params.id);
+    };
 };

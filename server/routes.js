@@ -4,6 +4,7 @@ const crypto = require("crypto");
 const fs = require("fs");
 const router = express.Router();
 const db = require("./db");
+const {start_game} = require("./socket");
 const {
   requireLogin,
   requireLogout,
@@ -198,7 +199,7 @@ router.get("/room/:id", authenticate, requireLogin, async (req, res) => {
     return;
   }  
 
-
+  var starting = false;
   const userInfo = await accountInfo2(req);
   const new_player = game_rooms.get(req.params.id); 
   if(new_player.player1.username === null){
@@ -211,6 +212,7 @@ router.get("/room/:id", authenticate, requireLogin, async (req, res) => {
     }
     new_player.player2.username = userInfo.username;
     new_player.player2.trophies = userInfo.trophies;
+    starting = true;
   }else{
     res.redirect('/lobby');
     return;
@@ -228,6 +230,16 @@ router.get("/room/:id", authenticate, requireLogin, async (req, res) => {
             .replace("{{trophies}}", new_player.player1.trophies);
         res.send(modified);
     });
+
+    setTimeout(() => {
+      if(starting) {
+        // const rand = Math.random() >= 0.5 ? 1 : 0;
+        // game_rooms.get(req.params.id).turn = rand;
+        // const io = req.app.get("socket.io");
+        // io.emit("start_game", req.params.id);
+        start_game(req.params.id);
+      }
+    }, 3000)
 });
 
 module.exports = {router, game_rooms};

@@ -20,8 +20,10 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(session);
 app.use(cookieparser());
 app.use(router);
+app.set('socket.io', io)
 
 attachSocketIO(io);
+
 
 server.listen(3001, () => {
     console.log('Server running...');
