@@ -98,7 +98,6 @@ router.post("/login", requireLogout, (req, res) => {
 
 router.post("/rooms/:username", requireLogin, (req, res) => {
   const { username } = req.params;
-
   if (game_rooms.has(username)) {
     res.status(400);
     res.send({ message: "Room already exists" });
@@ -106,8 +105,8 @@ router.post("/rooms/:username", requireLogin, (req, res) => {
   }
   const room = {
     player1: {
-      username: username,
-      trophies: 999,
+      username: null,
+      trophies: null,
       current_points: 0,
     },
     player2: {
@@ -193,20 +192,36 @@ router.get("/room/:id", authenticate, requireLogin, async (req, res) => {
     return;
   }  
 
+
   const userInfo = await accountInfo2(req);
-  //   console.log(userInfo);
+  const new_player = game_rooms.get(req.params.id); 
+  if(new_player.player1.username === null){
+    new_player.player1.username = userInfo.username;
+    new_player.player1.trophies = userInfo.trophies;
+  }else if(new_player.player2.username === null){
+    if(new_player.player1.username === userInfo.username){
+    res.redirect('/lobby');
+    return;  
+    }
+    new_player.player2.username = userInfo.username;
+    new_player.player2.trophies = userInfo.trophies;
+  }else{
+    res.redirect('/lobby');
+    return;
+  }
+
   const filePath = path.join(__dirname, "../public/views", "room.html");
-  res.sendFile(filePath);
-  /*fs.readFile(filePath, "utf-8", (err, fileContent) => {
+  fs.readFile(filePath, "utf-8", (err, fileContent) => {
         if (err) {
             console.error(err);
             res.status(500).send("Error reading room");
             return;
         }
         const modified = fileContent
-            .replace("{{username1}}", userInfo.username);
+            .replace("{{username}}", new_player.player1.username)
+            .replace("{{trophies}}", new_player.player1.trophies);
         res.send(modified);
-    });*/
+    });
 });
 
-module.exports = router;
+module.exports = {router, game_rooms};

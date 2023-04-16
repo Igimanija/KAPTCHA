@@ -4,7 +4,7 @@ const path = require("path");
 const socketIO = require('socket.io');
 const bodyParser = require("body-parser");
 const session = require('./session');
-const routes = require('./routes');
+const {router} = require('./routes');
 const attachSocketIO = require('./socket');
 const db = require('./db');
 const cookieparser = require("cookie-parser");
@@ -19,7 +19,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(session);
 app.use(cookieparser());
-app.use(routes);
+app.use(router);
 
 attachSocketIO(io);
 
