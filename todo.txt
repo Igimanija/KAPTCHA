@@ -1,10 +1,12 @@
+create magic button
+magic button = oboje imaju button,
+random na pocetku odabere koji ce prvi user igrat,
+nakon submita iduci player je na redu,
+kad je user na redu njemu je plavi button,
+kad nije njemu je crven button,
+uz click nek se salje drugom poruka
 
 
+--marin: napravit u socketu da prima nextquestion sto ce poslati novi turn plus pitanje, na clientu cemo po tomu razdvajat kome blokirat button i poslat obojici pitanja
 
-
-
-
-
-
-
-
+--marko: startamo preko button, ostatak isti ko marin

@@ -15,6 +15,7 @@
     <br />
     <input type="text" id="message_input" />
     <button onclick="send()">Send</button>
+    <button id="magic">Magic button</button>
     <script>
       const socket = io("http://localhost:3001");
 
@@ -68,6 +69,13 @@
         }
       });
 
+      socket.on("start_game", (room_id) => {
+        if (room_id !== get_my_room()) {
+          return;
+        }
+        
+      });
+
       window.addEventListener("beforeunload", (event) => {
         fetch(`/rooms/${get_my_room()}`, {
           method: "DELETE",
@@ -83,6 +91,8 @@
       }
 
       logEvery5Seconds();
+
+
     </script>
   </body>
 </html>
