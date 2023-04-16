@@ -32,6 +32,10 @@ async function getRooms() {
 
 function roomHtml(rooms) {
   const gameRoom = document.querySelector(".game_room");
+  const old_rooms = gameRoom.querySelectorAll(".room");
+  old_rooms.forEach((room)=>{
+    room.remove();
+  });
   for (const [key, value] of rooms) {
     gameRoom.insertAdjacentHTML(
       "beforeend",
@@ -48,3 +52,11 @@ function roomHtml(rooms) {
     );
   }
 }
+
+function refreshLobby() {
+  setInterval(() => {
+    getRooms();
+  }, 5000);
+}
+
+refreshLobby();

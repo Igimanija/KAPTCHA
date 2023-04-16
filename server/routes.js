@@ -96,6 +96,12 @@ router.post("/login", requireLogout, (req, res) => {
   );
 });
 
+router.get('/logout', (req, res) => {
+  res.clearCookie("token");
+  req.session.destroy();
+  res.redirect('/login');
+});
+
 router.post("/rooms/:username", requireLogin, (req, res) => {
   const { username } = req.params;
   if (game_rooms.has(username)) {
@@ -133,7 +139,7 @@ router.delete("/rooms/:username", requireLogin, (req, res) => {
     return;
   }
   game_rooms.delete(username);
-  res.send({ success: "Room deleted " + username });
+  res.redirect('/lobby');
 });
 
 router.get("/chatroom/:id", requireLogin, (req, res) => {
