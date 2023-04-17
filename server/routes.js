@@ -196,38 +196,38 @@ router.get("/room/:id", authenticate, requireLogin, async (req, res) => {
   if (!game_rooms.has(req.params.id)) {
     res.redirect('/lobby');
     return;
-  }  
+  }
 
 
   const userInfo = await accountInfo2(req);
-  const new_player = game_rooms.get(req.params.id); 
-  if(new_player.player1.username === null){
+  const new_player = game_rooms.get(req.params.id);
+  if (new_player.player1.username === null) {
     new_player.player1.username = userInfo.username;
     new_player.player1.trophies = userInfo.trophies;
-  }else if(new_player.player2.username === null){
-    if(new_player.player1.username === userInfo.username){
-    res.redirect('/lobby');
-    return;  
+  } else if (new_player.player2.username === null) {
+    if (new_player.player1.username === userInfo.username) {
+      res.redirect('/lobby');
+      return;
     }
     new_player.player2.username = userInfo.username;
     new_player.player2.trophies = userInfo.trophies;
-  }else{
+  } else {
     res.redirect('/lobby');
     return;
   }
 
   const filePath = path.join(__dirname, "../public/views", "room.html");
   fs.readFile(filePath, "utf-8", (err, fileContent) => {
-        if (err) {
-            console.error(err);
-            res.status(500).send("Error reading room");
-            return;
-        }
-        const modified = fileContent
-            .replace("{{username}}", new_player.player1.username)
-            .replace("{{trophies}}", new_player.player1.trophies);
-        res.send(modified);
-    });
+    if (err) {
+      console.error(err);
+      res.status(500).send("Error reading room");
+      return;
+    }
+    const modified = fileContent
+      .replace("{{username}}", new_player.player1.username)
+      .replace("{{trophies}}", new_player.player1.trophies);
+    res.send(modified);
+  });
 });
 
-module.exports = {router, game_rooms};
+module.exports = { router, game_rooms };
