@@ -4,6 +4,12 @@ module.exports = (io) => {
     io.on('connection', (socket) => {
         socket.on('username', (room_id)=>{
             io.emit('username',game_rooms.get(room_id), room_id);
+            let check = false;
+            if(game_rooms.get(room_id).player2.username !== null){
+                check = true;
+            }
+            console.log(check);
+            io.emit('game-start', check, room_id);
         });
 
         socket.on('message', (message, room_id)=>{
@@ -17,12 +23,5 @@ module.exports = (io) => {
             }
             io.emit('logged', check, room_id);
         });
-
-
     });
-    function start_game(room_id){
-        const rand = Math.random() >= 0.5 ? 1 : 0;
-        game_rooms.get(req.params.id).turn = rand;
-        io.emit("start_game", req.params.id);
-    };
 };
