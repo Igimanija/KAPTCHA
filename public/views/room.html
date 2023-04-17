@@ -45,7 +45,6 @@
         if (room_id !== get_my_room()) {
           return;
         }
-
         p1.innerHTML = game_room.player1.username;
         p2.innerHTML = game_room.player2.username;
         t1.innerHTML = game_room.player1.trophies;
@@ -59,11 +58,11 @@
         textarea.value += message + "\n";
       });
 
-      socket.on("logged", (check, room_id) => { 
+      socket.on("logged", (check, room_id) => {
         if (room_id !== get_my_room()) {
           return;
         }
-        if(check === false) {
+        if (check === false) {
           alert("Player has disconnected, you have won!");
           location.href = "lobby";
         }
@@ -73,7 +72,7 @@
         if (room_id !== get_my_room()) {
           return;
         }
-        
+        console.log("game should start");
       });
 
       window.addEventListener("beforeunload", (event) => {
@@ -92,7 +91,27 @@
 
       logEvery5Seconds();
 
+      socket.on("game-start", (check, room_id) => {
+        if (room_id !== get_my_room()) {
+          return;
+        }
+        console.log("USERNAME_PROMISE", USERNAME_PROMISE);
+        if (check === true) {
+          console.log("Game should start!");
+          socket.emit("my-turn");
+        }
+      });
 
+      const USERNAME_PROMISE = new Promise((resolve, reject) => {
+        let username = null;
+        fetch("https://example.com/username")
+          .then((response) => response.json())
+          .then((data) => {
+            username = data.username;
+            resolve(username);
+          })
+          .catch((error) => reject(error));
+      });
     </script>
   </body>
 </html>
