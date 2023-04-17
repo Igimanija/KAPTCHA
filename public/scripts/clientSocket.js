@@ -125,10 +125,19 @@ magic.addEventListener("click", (e) => {
   });
 });
 
-socket.on("my-turn", (player, room_id) => {
+socket.on("my-turn", (player, next_q, room_id) => {
   if (room_id !== get_my_room()) {
     return;
-  }  
+  }
+
+  fetch("/get_question/" + next_q + "&" + room_id)
+  .then((result)=>{
+    return result.json();
+  })
+  .then((data)=>{
+    console.log(data);
+  });
+
   const captcha = document.querySelector(".captcha");
   USERNAME_PROMISE.then((username) => {
     if (username !== player) {

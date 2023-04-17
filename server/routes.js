@@ -10,7 +10,6 @@ const {
   createJWT,
   authenticate,
 } = require("./middlewares");
-const num_q = 0;
 const game_rooms = new Map();
 
 router.get("/", (req, res) => {
@@ -122,7 +121,7 @@ router.post("/rooms/:username", requireLogin, (req, res) => {
       current_points: 0,
     },
     turn: 0,
-    used_q: [],
+    usedQ: [-1],
     answer: null,
   };
   game_rooms.set(username, room);
@@ -232,38 +231,24 @@ router.get("/room/:id", authenticate, requireLogin, async (req, res) => {
   });
 });
 
-/*router.get("/get_question/:room", (req, res) => {
-  console.log(getNewNum(game_rooms.get(req.params.room).used_q));
-  // db.query("select * from questions where id=?", req.params.id, (err, result)=>{
-  //   if (err) {
-  //     throw err;
-  //   }else {
-  //     console.log(req.body.room_id, req.body.used_q);
-  //     console.log(result);
-  //   }
-  // });
-});
+router.get("/get_question/:id&:room", (req, res) => {
+  //game_rooms.get(req.params.room).used_q
+  //console.log("Getting q number: ", req.params.id);
+  db.query("select * from questions where id=?", req.params.id, (err, result)=>{
+    if (err) {
+      throw err;
+    }else {
+      game_rooms.get(req.params.room).usedQ.push(req.params.id);
+      game_rooms.get(req.params.room).answer = result[0].correct_answer;
+      //console.log(game_rooms.get(req.params.room));
 
-function getNewNum(arr) {
-  var boolean = true;
-  let num;
-
-  while (boolean) {
-    num = Math.floor(Math.random() * 30 + 1);
-
-    for (var i = 0; i < arr.length; i++) {
-      var element = arr[i];
-      //console.log("Number in arr " + element + ", random number " + number);
-      if (element == num) {
-        //console.log("true");
-        boolean = true;
-        break;
-      }
-      boolean = false;
+      const userData = {
+        question: result[0].question,
+        answers: result[0].answers,
+      };
+      res.send(userData);
     }
-  }
-
-  return num;
-}*/
+  });
+});
 
 module.exports = { router, game_rooms };
