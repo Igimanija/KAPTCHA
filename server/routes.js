@@ -10,6 +10,7 @@ const {
   createJWT,
   authenticate,
 } = require("./middlewares");
+const num_q = 0;
 const game_rooms = new Map();
 
 router.get("/", (req, res) => {
@@ -96,10 +97,10 @@ router.post("/login", requireLogout, (req, res) => {
   );
 });
 
-router.get('/logout', (req, res) => {
+router.get("/logout", (req, res) => {
   res.clearCookie("token");
   req.session.destroy();
-  res.redirect('/login');
+  res.redirect("/login");
 });
 
 router.post("/rooms/:username", requireLogin, (req, res) => {
@@ -121,6 +122,8 @@ router.post("/rooms/:username", requireLogin, (req, res) => {
       current_points: 0,
     },
     turn: 0,
+    used_q: [],
+    answer: null,
   };
   game_rooms.set(username, room);
   res.send({ message: "Room created" });
@@ -139,7 +142,7 @@ router.delete("/rooms/:username", requireLogin, (req, res) => {
     return;
   }
   game_rooms.delete(username);
-  res.redirect('/lobby');
+  res.redirect("/lobby");
 });
 
 router.get("/chatroom/:id", requireLogin, (req, res) => {
@@ -194,10 +197,9 @@ function accountInfo2(req) {
 
 router.get("/room/:id", authenticate, requireLogin, async (req, res) => {
   if (!game_rooms.has(req.params.id)) {
-    res.redirect('/lobby');
+    res.redirect("/lobby");
     return;
   }
-
 
   const userInfo = await accountInfo2(req);
   const new_player = game_rooms.get(req.params.id);
@@ -206,13 +208,13 @@ router.get("/room/:id", authenticate, requireLogin, async (req, res) => {
     new_player.player1.trophies = userInfo.trophies;
   } else if (new_player.player2.username === null) {
     if (new_player.player1.username === userInfo.username) {
-      res.redirect('/lobby');
+      res.redirect("/lobby");
       return;
     }
     new_player.player2.username = userInfo.username;
     new_player.player2.trophies = userInfo.trophies;
   } else {
-    res.redirect('/lobby');
+    res.redirect("/lobby");
     return;
   }
 
@@ -229,5 +231,39 @@ router.get("/room/:id", authenticate, requireLogin, async (req, res) => {
     res.send(modified);
   });
 });
+
+/*router.get("/get_question/:room", (req, res) => {
+  console.log(getNewNum(game_rooms.get(req.params.room).used_q));
+  // db.query("select * from questions where id=?", req.params.id, (err, result)=>{
+  //   if (err) {
+  //     throw err;
+  //   }else {
+  //     console.log(req.body.room_id, req.body.used_q);
+  //     console.log(result);
+  //   }
+  // });
+});
+
+function getNewNum(arr) {
+  var boolean = true;
+  let num;
+
+  while (boolean) {
+    num = Math.floor(Math.random() * 30 + 1);
+
+    for (var i = 0; i < arr.length; i++) {
+      var element = arr[i];
+      //console.log("Number in arr " + element + ", random number " + number);
+      if (element == num) {
+        //console.log("true");
+        boolean = true;
+        break;
+      }
+      boolean = false;
+    }
+  }
+
+  return num;
+}*/
 
 module.exports = { router, game_rooms };

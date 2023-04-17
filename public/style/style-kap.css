@@ -28,7 +28,7 @@ body{
     width: 100%;
     aspect-ratio: 1/1;
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     margin: 6px 0;
     gap: 4px;
 }
@@ -38,6 +38,7 @@ body{
     display: flex;
     align-items: center;
     justify-content: center;
+    transition: all 0.25s ease-in-out;
 }
 
 img{
@@ -61,4 +62,22 @@ img{
     border: 0;
     color: white;
     font-size: 1.1rem;
+}
+
+.item-scale{
+    transform: scale(0.85);
+}
+
+.checked {
+    top: -3px;
+    right: -3px;
+    background-color: #2a76d9;
+    border-radius: 50%;
+    height: 16px;
+    width: 16px;
+    position: absolute;
+    text-align: center;
+    line-height: 16px;
+    color:white;
+    font-size: 10px;
 }
