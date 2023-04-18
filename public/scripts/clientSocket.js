@@ -43,8 +43,15 @@ socket.on("logged", (check, room_id) => {
     return;
   }
   if (check === false) {
-    alert("Player has disconnected, you have won!");
-    location.href = "lobby";
+    swal({
+      title: "Good job!",
+      text: "Player has disconnected. You have won!",
+      icon: "success",
+      button: "Aww yiss!",
+    }).then(() => {
+      location.href = "lobby";
+
+    });
   }
 });
 
@@ -86,19 +93,32 @@ socket.on("end-game", (room_id, player) => {
   if (room_id !== get_my_room()) {
     return;
   }
-  
+
   USERNAME_PROMISE.then((username) => {
     fetch(`/end_game/${get_my_room()}&${player}`, {
       method: "POST",
     })
-    if(username === player){
-      alert("You won!");
-      location.href = '/lobby';
-    }else{
-      alert("You lost!");
-      location.href = '/lobby';
+    if (username === player) {
+      swal({
+        title: "Good job!",
+        text: "You have won!",
+        icon: "success",
+        button: "Aww yiss!",
+      }).then(() => {
+        location.href = "lobby";
+
+      });
+    } else {
+      swal({
+        title: "Better job next time :/",
+        text: "You have lost!",
+        icon: "error",
+        button: "Aww maaan!",
+      }).then(() => {
+        location.href = "lobby";
+      });
     }
-    });
+  });
 });
 
 const USERNAME_PROMISE = new Promise((resolve, reject) => {
@@ -116,7 +136,12 @@ const USERNAME_PROMISE = new Promise((resolve, reject) => {
 
 magic.addEventListener("click", (e) => {
   if (checked_item === undefined) {
-    alert("Please select an answer");
+    swal({
+      title: "Cough cough",
+      text: "Please select an answer",
+      icon: "warning",
+      button: "Do it!",
+    });
     return;
   }
   //console.log(checked_item);
@@ -153,10 +178,10 @@ socket.on('point', (room_id, lucky_guy) => {
     return;
   }
   USERNAME_PROMISE.then((username) => {
-  if(username === lucky_guy){
-    player1_point();
-  }else{
-    player2_point();
-  }
+    if (username === lucky_guy) {
+      player1_point();
+    } else {
+      player2_point();
+    }
   });
 });
