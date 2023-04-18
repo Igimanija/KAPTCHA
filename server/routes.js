@@ -128,8 +128,17 @@ router.post("/rooms/:username", requireLogin, (req, res) => {
   res.send({ message: "Room created" });
 });
 
-router.get("/rooms", requireLogin, (req, res) => {
-  res.json(Object.fromEntries(game_rooms));
+router.get("/rooms", (req, res) => {
+  let to_send = new Map();
+
+  game_rooms.forEach(element => {
+    if(element.player2.username == null){
+      //console.log("room isn't full");
+      to_send.set(element.player1.username, element);
+    }
+  });
+
+  res.json(Object.fromEntries(to_send));
 });
 
 router.delete("/rooms/:username", requireLogin, (req, res) => {
@@ -144,19 +153,19 @@ router.delete("/rooms/:username", requireLogin, (req, res) => {
   res.redirect("/lobby");
 });
 
-router.get("/chatroom/:id", requireLogin, (req, res) => {
-  const id = req.params.id;
-  const filePath = path.join(__dirname, "../public/chatroom.html");
-  fs.readFile(filePath, "utf-8", (err, fileContent) => {
-    if (err) {
-      console.error(err);
-      res.status(500).send("Error reading chatroom");
-      return;
-    }
-    const modified = fileContent.replace("{{id}}", id);
-    res.send(modified);
-  });
-});
+// router.get("/chatroom/:id", requireLogin, (req, res) => {
+//   const id = req.params.id;
+//   const filePath = path.join(__dirname, "../public/chatroom.html");
+//   fs.readFile(filePath, "utf-8", (err, fileContent) => {
+//     if (err) {
+//       console.error(err);
+//       res.status(500).send("Error reading chatroom");
+//       return;
+//     }
+//     const modified = fileContent.replace("{{id}}", id);
+//     res.send(modified);
+//   });
+// });
 
 /*****
  *
