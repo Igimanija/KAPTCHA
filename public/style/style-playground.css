@@ -1,0 +1,63 @@
+.playground{
+    margin-top: 40px;
+    border: 1px solid orange;
+    height: 300px;
+    aspect-ratio: 3/1;
+    margin: auto;
+    position: relative;
+}
+/* ----- Players starts ----- */
+
+.players {
+    z-index: 2;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+  }
+  
+  .players > * {
+    transform: scale(0.4);
+    height: 160px;
+  }
+  
+  #player_red {
+    position: absolute;
+    bottom: 0;
+
+    transition: all 0.5 ease;
+  }
+
+  #player_blue {
+    position: absolute;
+    bottom: 0;
+
+    transition: all 0.5 ease;
+  }
+
+/* ----- Players ends ------- */
+
+
+
+/* ----- Road starts ----- */
+.road {
+  display: inline-block;
+  position: relative;
+  width: 100%;
+  height: 98px;
+  vertical-align: middle;
+  top: 236px;
+}
+
+.road > svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+
+.road > svg > rect {
+  width: 100%;
+  height: 100px;
+}
+
+/* ----- Road ends ----- */

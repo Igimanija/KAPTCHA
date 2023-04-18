@@ -231,22 +231,64 @@ router.get("/room/:id", authenticate, requireLogin, async (req, res) => {
   });
 });
 
-router.get("/get_question/:id&:room", (req, res) => {
-  db.query("select * from questions where id=?", req.params.id, (err, result) => {
-    if (err) {
-      throw err;
-    } else {
-      if (game_rooms.get(req.params.room).usedQ.indexOf(req.params.id) == -1) game_rooms.get(req.params.room).usedQ.push(req.params.id);
-      //game_rooms.get(req.params.room).usedQ.push(req.params.id);
-      game_rooms.get(req.params.room).answer = result[0].correct_answer;
+router.get("/get_question/:id&:room", authenticate, requireLogin,(req, res) => {
+  db.query(
+    "select * from questions where id=?",
+    req.params.id,
+    (err, result) => {
+      if (err) {
+        throw err;
+      } else {
+        if (game_rooms.get(req.params.room).usedQ.indexOf(req.params.id) == -1)
+          game_rooms.get(req.params.room).usedQ.push(req.params.id);
+        //game_rooms.get(req.params.room).usedQ.push(req.params.id);
+        game_rooms.get(req.params.room).answer = result[0].correct_answer;
 
-      const userData = {
-        question: result[0].question,
-        answers: result[0].answers,
-      };
-      res.send(userData);
+        const userData = {
+          question: result[0].question,
+          answers: result[0].answers,
+        };
+        res.send(userData);
+      }
     }
-  });
+  );
 });
 
+router.post("/end_game/:room&:lucky_guy", authenticate, requireLogin,(req, res) => {
+  if(game_rooms.get(req.params.room) === null || game_rooms.get(req.params.room) === undefined){
+    console.log(req.params.room);
+    return;
+  }
+  const current_room = game_rooms.get(req.params.room);
+  if (current_room.player1.username === req.params.lucky_guy) {
+    let win_points = current_room.player1.trophies + 30;
+    let lost_points = current_room.player2.trophies - 20;
+    if (lost_points < 0) {
+      lost_points = 0;
+    }
+    db.query("UPDATE users SET trophies = ? WHERE username = ?", [
+      win_points,
+      current_room.player1.username,
+    ]);
+    db.query("UPDATE users SET trophies = ? WHERE username = ?", [
+      lost_points,
+      current_room.player2.username,
+    ]);
+  } else {
+    let win_points = current_room.player2.trophies + 30;
+    let lost_points = current_room.player1.trophies - 20;
+    if (lost_points < 0) {
+      lost_points = 0;
+    }
+    db.query("UPDATE users SET trophies = ? WHERE username = ?", [
+      win_points,
+      current_room.player2.username,
+    ]);
+    db.query("UPDATE users SET trophies = ? WHERE username = ?", [
+      lost_points,
+      current_room.player1.username,
+    ]);
+  }
+  game_rooms.delete(current_room);
+});
 module.exports = { router, game_rooms };

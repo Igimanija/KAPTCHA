@@ -12,7 +12,6 @@ module.exports = (io) => {
             if (game_rooms.get(room_id).player2.username !== null) {
                 check = true;
                 game_rooms.get(room_id).turn = Math.random() >= 0.5 ? 1 : 0;
-                // console.log(game_rooms.get(room_id).turn);
             }
             io.emit('game-start', check, room_id);
         });
@@ -36,7 +35,6 @@ module.exports = (io) => {
             }
             if (game_rooms.get(room_id).player1.username == username) {
                 const next_q = getNewNum(game_rooms.get(room_id).usedQ);
-                console.log("emitted start");
                 io.emit('my-turn', player, next_q, room_id);
             }
         });
@@ -53,18 +51,14 @@ module.exports = (io) => {
             }
 
             const rightAnswer = game_rooms.get(room_id).answer;
-            console.log("checked", checked_item);
-            console.log("right", rightAnswer);
             if (checked_item == rightAnswer) {
                 player_turn.current_points += 1;
-                console.log("this guy got 1 right", player_turn.username, player_turn.current_points);
+                io.emit('point', room_id, player_turn.username);
             }
 
-            if (player_turn.current_points == 10) {
+            if (player_turn.current_points == 2) {
                 io.emit("end-game", room_id, player_turn.username);
             }
-
-            //console.log(game_rooms.get(room_id));
 
             game_rooms.get(room_id).turn++;
             const next_q = getNewNum(game_rooms.get(room_id).usedQ);

@@ -52,7 +52,7 @@ socket.on("start_game", (room_id) => {
   if (room_id !== get_my_room()) {
     return;
   }
-  console.log("game should start");
+  // console.log("game should start");
 });
 
 window.addEventListener("beforeunload", (event) => {
@@ -86,7 +86,19 @@ socket.on("end-game", (room_id, player) => {
   if (room_id !== get_my_room()) {
     return;
   }
-  alert("You won!");
+  
+  USERNAME_PROMISE.then((username) => {
+    fetch(`/end_game/${get_my_room()}&${player}`, {
+      method: "POST",
+    })
+    if(username === player){
+      alert("You won!");
+      location.href = '/lobby';
+    }else{
+      alert("You lost!");
+      location.href = '/lobby';
+    }
+    });
 });
 
 const USERNAME_PROMISE = new Promise((resolve, reject) => {
@@ -117,7 +129,7 @@ socket.on("my-turn", async (player, next_q, room_id) => {
   if (room_id !== get_my_room()) {
     return;
   }
-  console.log("asked for q");
+  // console.log("asked for q");
   fetch("/get_question/" + next_q + "&" + room_id)
     .then((result) => {
       return result.json();
@@ -133,5 +145,18 @@ socket.on("my-turn", async (player, next_q, room_id) => {
     } else {
       captcha.style.opacity = "1";
     }
+  });
+});
+
+socket.on('point', (room_id, lucky_guy) => {
+  if (room_id !== get_my_room()) {
+    return;
+  }
+  USERNAME_PROMISE.then((username) => {
+  if(username === lucky_guy){
+    player1_point();
+  }else{
+    player2_point();
+  }
   });
 });

@@ -9,7 +9,7 @@ const createQuestion = (questionObject) => {
     const options = document.querySelector('.options')
     const question = questionObject.question;
     const answers = questionObject.answers.split(",")
-    console.log(answers);
+    // console.log(answers);
     options.innerHTML = ""
     questionHeader.innerHTML = question
     for (const answer of answers) {
@@ -21,7 +21,7 @@ const createQuestion = (questionObject) => {
         options.innerHTML += answerHtml;
     }
     const items = document.querySelectorAll(".item");
-    console.log(items);
+    // console.log(items);
     let counter = 1;
     const element = document.createElement("div");
     element.className = "checked";
@@ -29,7 +29,7 @@ const createQuestion = (questionObject) => {
     items.forEach((item) => {
         item.setAttribute("num", counter++);
         item.addEventListener("click", (e) => {
-            console.log(item);
+            // console.log(item);
             items.forEach((i) => {
                 i.classList.remove("item-scale");
             });
