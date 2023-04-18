@@ -232,15 +232,12 @@ router.get("/room/:id", authenticate, requireLogin, async (req, res) => {
 });
 
 router.get("/get_question/:id&:room", (req, res) => {
-  //game_rooms.get(req.params.room).used_q
-  //console.log("Getting q number: ", req.params.id);
-  db.query("select * from questions where id=?", req.params.id, (err, result)=>{
+  db.query("select * from questions where id=?", req.params.id, (err, result) => {
     if (err) {
       throw err;
-    }else {
+    } else {
       game_rooms.get(req.params.room).usedQ.push(req.params.id);
       game_rooms.get(req.params.room).answer = result[0].correct_answer;
-      //console.log(game_rooms.get(req.params.room));
 
       const userData = {
         question: result[0].question,

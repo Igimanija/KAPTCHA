@@ -33,7 +33,7 @@ async function getRooms() {
 function roomHtml(rooms) {
   const gameRoom = document.querySelector(".game_room");
   const old_rooms = gameRoom.querySelectorAll(".room");
-  old_rooms.forEach((room)=>{
+  old_rooms.forEach((room) => {
     room.remove();
   });
   for (const [key, value] of rooms) {

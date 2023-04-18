@@ -35,7 +35,6 @@ module.exports = (io) => {
                 player = game_rooms.get(room_id).player2.username;
             }
             const next_q = getNewNum(game_rooms.get(room_id).usedQ);
-            //console.log("In socket1: ", next_q);
             io.emit('my-turn', player, next_q, room_id);
         });
 
@@ -49,11 +48,9 @@ module.exports = (io) => {
             if (player_turn !== username) {
                 return;
             }
-            //console.log(`${player_turn} should be playing`);
             game_rooms.get(room_id).turn++;
 
             const next_q = getNewNum(game_rooms.get(room_id).usedQ);
-            //console.log("In socket2: ", next_q);
             io.emit('my-turn', next_player, next_q, room_id);
         });
     });
@@ -80,7 +77,6 @@ function getNewNum(arr) {
 
     return num;
 }
-
 function setupQA() {
     db.query("select * from questions", (err, result) => {
         if (err) throw err;

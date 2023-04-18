@@ -99,8 +99,8 @@ const items = document.querySelectorAll(".item");
 let checked_item;
 let counter = 1;
 const element = document.createElement("div");
-  element.className = "checked";
-  element.innerHTML = "✔";
+element.className = "checked";
+element.innerHTML = "✔";
 items.forEach((item) => {
   item.setAttribute("num", counter++);
   item.addEventListener("click", (e) => {
@@ -125,23 +125,26 @@ magic.addEventListener("click", (e) => {
   });
 });
 
-socket.on("my-turn", (player, next_q, room_id) => {
+socket.on("my-turn", async (player, next_q, room_id) => {
+  console.log("Usao sam ovdje");
   if (room_id !== get_my_room()) {
     return;
   }
 
+
+
+
   fetch("/get_question/" + next_q + "&" + room_id)
-  .then((result)=>{
-    return result.json();
-  })
-  .then((data)=>{
-    console.log(data);
-  });
+    .then((result) => {
+      return result.json();
+    })
+    .then((data) => {
+      createQuestion(data);
+    });
 
   const captcha = document.querySelector(".captcha");
   USERNAME_PROMISE.then((username) => {
     if (username !== player) {
-      console.log("bababba");
       captcha.style.opacity = "0.6";
     } else {
       captcha.style.opacity = "1";

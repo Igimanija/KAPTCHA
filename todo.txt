@@ -1,6 +1,3 @@
-ko moze kliknut
-
-fetchat pitanja i odgovore
-postavka njih
-slanje odgovora
+slanje odgovora i provjera t/f
+poslati ponovno pitanje
 i sve u krug
