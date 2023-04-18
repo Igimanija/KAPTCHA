@@ -77,15 +77,20 @@ socket.on("game-start", (check, room_id) => {
   }
   USERNAME_PROMISE.then((username) => {
     if (check === true) {
-      console.log("Game should start!");
-      socket.emit("my-turn", get_my_room());
+      socket.emit("my-turn", get_my_room(), username);
     }
   });
 });
 
+socket.on("end-game", (room_id, player) => {
+  if (room_id !== get_my_room()) {
+    return;
+  }
+  alert("You won!");
+});
+
 const USERNAME_PROMISE = new Promise((resolve, reject) => {
   let username = null;
-  console.log("fetch!!!");
   fetch("/accountInfo2")
     .then((response) => response.json())
     .then((data) => {
@@ -95,45 +100,24 @@ const USERNAME_PROMISE = new Promise((resolve, reject) => {
     .catch((error) => reject(error));
 });
 
-const items = document.querySelectorAll(".item");
-let checked_item;
-let counter = 1;
-const element = document.createElement("div");
-element.className = "checked";
-element.innerHTML = "✔";
-items.forEach((item) => {
-  item.setAttribute("num", counter++);
-  item.addEventListener("click", (e) => {
-    items.forEach((i) => {
-      i.classList.remove("item-scale");
-    });
-    element.remove();
-    item.appendChild(element);
-    item.classList.toggle("item-scale");
-    checked_item = item.getAttribute("num");
-  });
-});
+
 
 magic.addEventListener("click", (e) => {
   if (checked_item === undefined) {
     alert("Please select an answer");
     return;
   }
-  console.log(checked_item);
+  //console.log(checked_item);
   USERNAME_PROMISE.then((username) => {
     socket.emit("answer", get_my_room(), username, checked_item);
   });
 });
 
 socket.on("my-turn", async (player, next_q, room_id) => {
-  console.log("Usao sam ovdje");
   if (room_id !== get_my_room()) {
     return;
   }
-
-
-
-
+  console.log("asked for q");
   fetch("/get_question/" + next_q + "&" + room_id)
     .then((result) => {
       return result.json();

@@ -12,7 +12,7 @@ module.exports = (io) => {
             if (game_rooms.get(room_id).player2.username !== null) {
                 check = true;
                 game_rooms.get(room_id).turn = Math.random() >= 0.5 ? 1 : 0;
-                console.log(game_rooms.get(room_id).turn);
+                // console.log(game_rooms.get(room_id).turn);
             }
             io.emit('game-start', check, room_id);
         });
@@ -29,29 +29,46 @@ module.exports = (io) => {
             io.emit('logged', check, room_id);
         });
 
-        socket.on('my-turn', (room_id) => {
+        socket.on('my-turn', (room_id, username) => {
             let player = game_rooms.get(room_id).player1.username;
             if (game_rooms.get(room_id).turn % 2 === 1) {
                 player = game_rooms.get(room_id).player2.username;
             }
-            const next_q = getNewNum(game_rooms.get(room_id).usedQ);
-            io.emit('my-turn', player, next_q, room_id);
+            if (game_rooms.get(room_id).player1.username == username) {
+                const next_q = getNewNum(game_rooms.get(room_id).usedQ);
+                console.log("emitted start");
+                io.emit('my-turn', player, next_q, room_id);
+            }
         });
 
         socket.on('answer', (room_id, username, checked_item) => {
-            let player_turn = game_rooms.get(room_id).player1.username;
-            let next_player = game_rooms.get(room_id).player2.username;
+            let player_turn = game_rooms.get(room_id).player1;
+            let next_player = game_rooms.get(room_id).player2;
             if (game_rooms.get(room_id).turn % 2 === 1) {
-                player_turn = game_rooms.get(room_id).player2.username;
-                next_player = game_rooms.get(room_id).player1.username;
+                player_turn = game_rooms.get(room_id).player2;
+                next_player = game_rooms.get(room_id).player1;
             }
-            if (player_turn !== username) {
+            if (player_turn.username !== username) {
                 return;
             }
-            game_rooms.get(room_id).turn++;
 
+            const rightAnswer = game_rooms.get(room_id).answer;
+            console.log("checked", checked_item);
+            console.log("right", rightAnswer);
+            if (checked_item == rightAnswer) {
+                player_turn.current_points += 1;
+                console.log("this guy got 1 right", player_turn.username, player_turn.current_points);
+            }
+
+            if (player_turn.current_points == 10) {
+                io.emit("end-game", room_id, player_turn.username);
+            }
+
+            //console.log(game_rooms.get(room_id));
+
+            game_rooms.get(room_id).turn++;
             const next_q = getNewNum(game_rooms.get(room_id).usedQ);
-            io.emit('my-turn', next_player, next_q, room_id);
+            io.emit('my-turn', next_player.username, next_q, room_id);
         });
     });
 };
@@ -65,9 +82,7 @@ function getNewNum(arr) {
 
         for (var i = 0; i < arr.length; i++) {
             var element = arr[i];
-            //console.log("Number in arr " + element + ", random number " + number);
             if (element == num) {
-                //console.log("true");
                 boolean = true;
                 break;
             }
@@ -83,3 +98,7 @@ function setupQA() {
         num_q = result.length;
     });
 }
+
+
+
+

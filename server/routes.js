@@ -236,7 +236,8 @@ router.get("/get_question/:id&:room", (req, res) => {
     if (err) {
       throw err;
     } else {
-      game_rooms.get(req.params.room).usedQ.push(req.params.id);
+      if (game_rooms.get(req.params.room).usedQ.indexOf(req.params.id) == -1) game_rooms.get(req.params.room).usedQ.push(req.params.id);
+      //game_rooms.get(req.params.room).usedQ.push(req.params.id);
       game_rooms.get(req.params.room).answer = result[0].correct_answer;
 
       const userData = {
