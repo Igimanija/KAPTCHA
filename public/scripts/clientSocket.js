@@ -1,4 +1,5 @@
 const socket = io("http://localhost:3001");
+let myinterval;
 
 socket.on("connection");
 
@@ -43,6 +44,7 @@ socket.on("logged", (check, room_id) => {
     return;
   }
   if (check === false) {
+
     swal({
       title: "Good job!",
       text: "Player has disconnected. You have won!",
@@ -71,7 +73,7 @@ window.addEventListener("beforeunload", (event) => {
 });
 
 function logEvery5Seconds() {
-  setInterval(() => {
+   myinterval = setInterval(() => {
     socket.emit("logging", get_my_room());
   }, 5000);
 }
@@ -93,7 +95,7 @@ socket.on("end-game", (room_id, player) => {
   if (room_id !== get_my_room()) {
     return;
   }
-
+  clearInterval(myinterval);
   USERNAME_PROMISE.then((username) => {
     fetch(`/end_game/${get_my_room()}&${player}`, {
       method: "POST",

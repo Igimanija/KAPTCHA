@@ -25,6 +25,6 @@ app.set('socket.io', io)
 attachSocketIO(io);
 
 
-server.listen(3001, () => {
+server.listen(3000, () => {
     console.log('Server running...');
 });
