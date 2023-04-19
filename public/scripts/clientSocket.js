@@ -1,4 +1,4 @@
-const socket = io("http://localhost:3001");
+const socket = io("http://localhost:3000");
 let myinterval;
 
 socket.on("connection");
@@ -73,7 +73,7 @@ window.addEventListener("beforeunload", (event) => {
 });
 
 function logEvery5Seconds() {
-   myinterval = setInterval(() => {
+  myinterval = setInterval(() => {
     socket.emit("logging", get_my_room());
   }, 5000);
 }
