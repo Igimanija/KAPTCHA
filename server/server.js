@@ -21,6 +21,7 @@ app.use(session);
 app.use(cookieparser());
 app.use(router);
 app.set('socket.io', io)
+app.disable("x-powered-by");
 
 attachSocketIO(io);
 

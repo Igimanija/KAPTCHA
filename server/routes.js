@@ -47,9 +47,14 @@ router.post("/register", requireLogout, (req, res) => {
     return;
   }
   const { username, email, password } = req.body;
+  var filtered_username = req.body.username.replace(/[^\w ]/g, '');
+  if(filtered_username != username){
+    res.redirect("/register");
+    return;
+  }
   db.query(
     "Select username  from users where username = ?",
-    req.body.username,
+    filtered_username,
     function (error, result) {
       if (result.length > 0) {
         res.redirect("/register");
@@ -62,7 +67,7 @@ router.post("/register", requireLogout, (req, res) => {
       db.query(
         "Insert into users (username, email, password) values (?,?,?)",
         [
-          username,
+          filtered_username,
           email,
           crypto.createHash("sha256").update(password).digest("hex"),
         ],
@@ -76,9 +81,14 @@ router.post("/register", requireLogout, (req, res) => {
 });
 
 router.post("/login", requireLogout, (req, res) => {
+  if(req.body.username == undefined){
+    res.redirect("/login");
+    return;
+  }
+  var filtered_username = req.body.username.replace(/[^\w ]/g, '');
   db.query(
     "Select username, password from users where username = ?",
-    req.body.username,
+    filtered_username,
     function (error, result) {
       if (error) throw error;
       if (result.length === 0) {
@@ -90,7 +100,7 @@ router.post("/login", requireLogout, (req, res) => {
         .update(req.body.password)
         .digest("hex");
       if (result[0].password == testpass) {
-        req.session.username = req.body.username;
+        req.session.username = filtered_username;
         let token = createJWT(result[0].username);
         res.cookie("token", token, {
           httpOnly: true,
