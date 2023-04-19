@@ -42,12 +42,20 @@ router.get("/register", requireLogout, (req, res) => {
 });
 
 router.post("/register", requireLogout, (req, res) => {
+  if(req.body.username == undefined){
+    res.redirect("/register");
+    return;
+  }
   const { username, email, password } = req.body;
   db.query(
     "Select username  from users where username = ?",
     req.body.username,
     function (error, result) {
       if (result.length > 0) {
+        res.redirect("/register");
+        return;
+      }
+      if (username.length > 50 || email.length > 50) {
         res.redirect("/register");
         return;
       }
@@ -87,6 +95,7 @@ router.post("/login", requireLogout, (req, res) => {
         res.cookie("token", token, {
           httpOnly: true,
           maxAge: 4 * 60 * 60 * 1000,
+          sameSite: "strict",
         });
         res.redirect("/lobby");
       } else {

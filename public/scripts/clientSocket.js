@@ -1,5 +1,6 @@
 const socket = io("http://localhost:3000");
 let myinterval;
+let answerinterval;
 
 socket.on("connection");
 
@@ -96,6 +97,7 @@ socket.on("end-game", (room_id, player) => {
     return;
   }
   clearInterval(myinterval);
+  clearInterval(answerinterval);
   USERNAME_PROMISE.then((username) => {
     fetch(`/end_game/${get_my_room()}&${player}`, {
       method: "POST",
@@ -164,13 +166,16 @@ socket.on("my-turn", async (player, next_q, room_id) => {
     .then((data) => {
       createQuestion(data);
     });
-
+    clearInterval(answerinterval);
   const captcha = document.querySelector(".captcha");
   USERNAME_PROMISE.then((username) => {
     if (username !== player) {
       captcha.style.opacity = "0.6";
     } else {
       captcha.style.opacity = "1";
+      answerinterval = setInterval(() => {
+        socket.emit("answer", get_my_room(), username, "randomizedanswerthatisntcorrect");
+      }, 30000);
     }
   });
 });
