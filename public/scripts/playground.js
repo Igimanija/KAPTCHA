@@ -1,5 +1,5 @@
 const buttons = document.querySelectorAll('.playground-button');
-const tiles_pos = [0,102,191, 280, 369.5, 460, 549.5, 640, 729.5, 820];
+const tiles_pos = [0, 75,147, 219, 291, 363, 435, 507, 579, 651];
 let counter1 = 0;
 let counter2 = 0;
 
