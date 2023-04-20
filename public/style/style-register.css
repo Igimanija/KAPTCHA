@@ -1,90 +1,71 @@
-.container{
+@import "style.css";
+
+body{
     height: 100vh;
-    width: 100%;
     display: flex;
-    overflow-y: hidden;
-    align-items: center;
-    justify-content: center;;
+    overflow: hidden;
 }
 
-.register-image{
-    height: 100%;
-    width: 50%;
+.game{
+    flex-basis: 65%;
     background-color: blue;
 }
 .register-form{
-    height: 100%;
-    width: 50%;
+    flex-basis: 35%;
+    background-color: var(--blue);
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-
 }
 .form{
+    width: 60%;
+    margin: auto;
+    border-radius: 15px;
+    padding: 40px;
+    background: var(--white);
+    box-shadow:  20px 20px 60px #383a7c,
+    -20px -20px 60px #8486ff;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    border:2px solid rgb(168, 165, 165);
-    border-radius: 10px;
-    padding: 20px;
-        background: whitesmoke;
+    justify-content: space-between;
 
-    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;}
-
-.register-form form{
-    margin-top: 20px;
-    display: flex;
-    flex-direction: column;
-    padding:10px;
 }
-label{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: start;
+h1{
+    font-size: 2.5rem;
     margin-bottom: 16px;
 }
 
+label{
+    display: flex;
+    flex-direction: column;
+    line-height: 20px;
+    margin-bottom: 10px;
+    margin-left: 10px;
+}
+
 input{
-    width: 100%;
-    min-width: 200px;
-    max-width: 250px;
-    height: 40px;
-    outline: none !important;
-    border: none;
-    border:2px solid rgb(168, 165, 165);
-    border-radius: 10px;
-    padding: 0 10px;
+    height: 24px;
+    padding: 8px;
+    border-radius: 15px;
+    border: 1px solid var(--black);
+    margin-left: -10px;
+    font-size: 1rem;
+  }
 
-}
-
-input::placeholder{
-    color: rgb(168, 165, 165);
-    font-weight: bold;
-    margin-left: 3px;
-    padding: 10px;
-}
-
-input:focus{
-    border-color: rgb(74, 24, 191);
-    outline: none;
-}
 .registerBtn{
-    outline: none;
-    border: none;
-    padding: 10px 20px;
-    background-color:black;
-    color: white;
-    border-radius: 20px;
+    width: 100%;
+    background-color: var(--black);
+    color: var(--white);
+    border: 0;
+    height: 32px;
+    border-radius: 15px;
+    font-size: 1rem;
 }
 
-@media (max-width:768px) {
-    .register-image{
-        display: none;
+@media only screen and (max-width: 800px) {
+    body{
+        flex-direction: column-reverse;
     }
-    .container{
-        background-color: blue;
+
+    .form{
+        margin: 20px auto;
     }
 }

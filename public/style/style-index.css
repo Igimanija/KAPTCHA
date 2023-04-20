@@ -1,48 +1,69 @@
 @import "style.css";
 
+* {
+  margin: 0;
+  padding: 0;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+}
+
 body {
   display: flex;
   height: 100vh;
-  background-color: var(--white);
+  overflow: hidden;
 }
 
 .info {
-  flex-basis: 35%;
-  height: 100%;
-  border-right: 1px solid var(--black);
+  flex-basis: 30%;
+  background-color: var(--blue);
+  color: var(--white);
+  display: grid;
+}
+
+.container {
+  border-radius: 15px;
+  background: var(--blue);
+  box-shadow: var(--box-shadow);
+  width: 80%;
+  height: 340px;
+  padding: 40px;
+  margin: auto;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  padding-left: 20px;
-  gap: 20px;
+  justify-content: space-between;
 }
 
-.info > h1 {
-  font-size: 4rem;
+.container > h1 {
+    font-size: 4rem;
 }
 
-.info > .links {
-  border-radius: 40px;
-  border: 1px solid black;
-  padding: 10px 20px;
-  display: flex;
-  width: fit-content;
-  gap: 20px;
-}
-
-.info > .links > a {
-  text-decoration: none;
-  transition: 0.4s all ease;
+.container > p {
   font-size: 0.8rem;
+  font-weight: 100;
 }
 
-.info > .links > a:hover {
-    color: blue;
-    text-decoration: underline;
+.container > .links  > a{
+    text-decoration: none;
+    color: var(--white);
+    border: rgba(246, 255, 248, 0.4) 1px solid;
+    padding: 5px 10px;
+    border-radius: 40px;
 }
 
-
-.game {
-  flex-basis: 65%;
-  background-color: blue;
+.game{
+  flex-basis: 70%;
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+  user-select: none;
 }
+
+@media only screen and (max-width: 800px) {
+  body{
+    flex-direction: column;
+  }
+  .container{
+    margin:  15px auto;
+    height: 250px;
+  }
+} 

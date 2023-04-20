@@ -1,6 +1,8 @@
 :root{
-    --black: black;
-    --white: white;
+    --black: rgb(10, 17, 40);
+    --white: rgb(246, 255, 248);
+    --blue: #5e60ce;
+--box-shadow: 20px 20px 60px #5052af, -20px -20px 60px #6c6eed;
 }
 
 *{
@@ -8,7 +10,6 @@
     margin: 0;
     font-family: Arial, Helvetica, sans-serif;
     box-sizing: border-box;
-    color: var(--black);
 }
 
 

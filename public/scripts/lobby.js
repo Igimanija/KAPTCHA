@@ -1,5 +1,12 @@
 // const username = session.get('username');
 const errorP = document.querySelector("#errorP");
+const btn_create = document.querySelector(".lobbyBtn");
+
+window.onload = () => {
+  getRooms();
+}
+
+btn_create.addEventListener("click", createRoom);
 
 async function createRoom() {
   try {
@@ -56,7 +63,23 @@ function roomHtml(rooms) {
 function refreshLobby() {
   setInterval(() => {
     getRooms();
-  }, 5000);
+  }, 2000);
 }
 
 refreshLobby();
+
+const points = document.querySelector(".points");
+const points_div = document.querySelector(".trophies");
+const first_font_size = window
+  .getComputedStyle(points)
+  .getPropertyValue("font-size");
+
+function points_size() {
+  let font_size_px = parseInt(first_font_size);
+  while (points_div.scrollWidth > points_div.clientWidth) {
+    font_size_px--;
+    points.style.fontSize = font_size_px + "px";
+  }
+}
+
+points_size();

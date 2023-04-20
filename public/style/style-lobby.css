@@ -1,9 +1,9 @@
 @import "style.css";
 
 body{
-    width: 100%;
     height: 100vh;
     display: flex;
+    background-color: var(--blue);
 }
 
 main{
@@ -14,14 +14,16 @@ main{
 }
 
 .game_room {
+    border-radius: 15px;
+    box-shadow:  var(--box-shadow);
     display: flex;
     flex-direction: column;
     flex-basis: 60%;
     gap: 20px;
-    border: 1px solid black;
     border-radius: 15px;
     padding: 40px;
     height: 100%;
+    background-color: #424398;
 }
 
 .game_room > .room {
@@ -31,41 +33,61 @@ main{
     height: 40px;
     background-color: black;
     color: white;
-    padding: 10px;
+    padding: 10px 20px;
     border-radius: 30px;
 }
 
 .game_room > p {
     margin-left: 10px;
 }
+
 .room > * {
     color: white;
 }
 
-.room > button {
-    color: white;
+.room > a > button {
+    color: var(--white);
     height: 40px;
     width: 80px;
-    margin: -10px;
+    margin: -20px;
     border: 1px solid difference;
     border-radius: 30px;
     background-color: transparent;
+    border: 1px solid var(--white);
+    transition: all 1s ease;
+}
+
+.room > a > button:hover{
+    background-color: var(--white);
+    color: var(--black);
 }
 
 .user_info {
-    border: 1px solid black;
+    background-color: #424398;
     height: 100%;
+    width: 100%;
     padding: 40px;
     flex-basis: 35%;
+    border-radius: 15px;
+    box-shadow:  var(--box-shadow);
+    color: var(--white);
+}
+
+.user_info > p {
+    opacity: 0.8;
 }
 
 .user_info > .trophies {
-    padding: 10px;
-    border: 1px solid black;
+    border-radius: 15px;
+    padding: 15px;
+    border: 1px solid var(--black);
+    color: var(--white);
     aspect-ratio: 1/1;
     position: relative;
     display: flex;
     margin-bottom: 16px;
+    width:235px;
+    overflow: hidden;
 }
 
 .user_info > .trophies > .points {
@@ -79,11 +101,30 @@ main{
 }
 
 #log_out{
+    position: absolute;
+    right: 0;
+    top: 0;
     padding: 10px 30px;
     background-color: black;
     height: fit-content;
     color: white;   
     border-radius: 0 0 0 30px; 
+    transition: all 0.5s ease;
+}
+
+#log_out>a>button{
+    background-color: transparent;
+    border: 0;
+    color: var(--white);
+    font-size: 1.2rem;
+}
+
+#log_out:hover button{
+    color: var(--black);
+}
+
+#log_out:hover {
+    background-color: var(--white);
 }
 
 .lobby-head {
@@ -92,11 +133,36 @@ main{
     align-items: center;
 }
 
+.lobby-head > p {
+    font-size: 1.4rem;
+    font-weight: 1000;
+    color: var(--white);
+}
 .lobbyBtn{
-    outline: none;
     border: none;
     padding: 10px 20px;
     background-color:black;
     color: white;
     border-radius: 20px;
+    font-size: 0.8rem;
+}
+
+#errorP{
+    color:red
+}
+
+@media only screen and (max-width: 800px) {
+    main{
+        flex-direction: column-reverse;
+    }
+    .game_room{
+        border-radius: 0;
+    }
+    .user_info{
+        padding-top: 50px;
+        border-radius: 0;
+    }
+    .user_info > .trophies {
+        width: 100%;
+    }
 }
