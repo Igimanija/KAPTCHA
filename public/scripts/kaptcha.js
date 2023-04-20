@@ -1,4 +1,38 @@
 let checked_item;
+// Set the initial timer value in milliseconds
+let timerValue = 30000;
+
+// Get the timer element, restart button element, and start button element
+const timerElement = document.getElementById("timer");
+function restartTimer() {
+    timerValue = 30000;
+    startTimer();
+}
+function startTimer() {
+    // Start the timer interval
+    timerInterval = setInterval(() => {
+        // Decrement the timer value by 10 milliseconds
+        timerValue -= 10;
+
+        // Format the time in minutes, seconds, and milliseconds
+        let minutes = Math.floor(timerValue / 60000);
+        let seconds = Math.floor((timerValue % 60000) / 1000);
+        let milliseconds = timerValue % 1000;
+        let timeString = `${seconds.toString().padStart(2, '0')}.${milliseconds.toString().padStart(3, '0')}`;
+
+        // Update the timer element with the new time
+        timerElement.innerHTML = timeString;
+
+        // Check if the timer has reached zero
+        if (timerValue <= 0) {
+            // Stop the timer interval
+            clearInterval(timerInterval);
+
+            // Display a message when the timer is done
+            restartTimer()
+        }
+    }, 10);
+}
 
 
 function shuffle(array) {

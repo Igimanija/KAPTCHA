@@ -15,7 +15,7 @@ const app = express();
 const server = http.createServer(app);
 const io = socketIO(server, { cors: { origin: '*' } });
 
-app.use(helmet());
+//app.use(helmet());
 app.use(express.static(path.join(__dirname, '../public')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));

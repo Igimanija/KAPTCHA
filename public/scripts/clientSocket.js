@@ -166,13 +166,15 @@ socket.on("my-turn", async (player, next_q, room_id) => {
     .then((data) => {
       createQuestion(data);
     });
-    clearInterval(answerinterval);
+  clearInterval(answerinterval);
   const captcha = document.querySelector(".captcha");
   USERNAME_PROMISE.then((username) => {
     if (username !== player) {
       captcha.style.opacity = "0.6";
+      startTimer();
     } else {
       captcha.style.opacity = "1";
+      startTimer();
       answerinterval = setInterval(() => {
         socket.emit("answer", get_my_room(), username, "randomizedanswerthatisntcorrect");
       }, 30000);
