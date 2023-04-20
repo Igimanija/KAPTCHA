@@ -16,16 +16,16 @@ renderer.setSize(game.offsetWidth, game.offsetHeight);
 game.appendChild(renderer.domElement);
 
 const loader = new THREE.TextureLoader();
-loader.load("../images/vertical.jpg", (texture) => {
-  const geometry = new THREE.BoxGeometry(1, 1, 3);
+loader.load("../images/kaptcha.png", (texture) => {
+  const geometry = new THREE.BoxGeometry(2, 0.2, 3);
 
   const materials = [
-    new THREE.MeshStandardMaterial({ color: 0x0000ff }),
-    new THREE.MeshStandardMaterial({ color: 0x0000ff }),
+    new THREE.MeshStandardMaterial({ color: 0xffffff }),
+    new THREE.MeshStandardMaterial({ color: 0xffffff }),
     new THREE.MeshStandardMaterial({ map: texture }),
-    new THREE.MeshStandardMaterial({ color: 0x0000ff }),
-    new THREE.MeshStandardMaterial({ color: 0x0000ff }),
-    new THREE.MeshStandardMaterial({ color: 0x0000ff }),
+    new THREE.MeshStandardMaterial({ color: 0xffffff }),
+    new THREE.MeshStandardMaterial({ color: 0xffffff }),
+    new THREE.MeshStandardMaterial({ color: 0xffffff }),
   ];
 
   const cube = new THREE.Mesh(geometry, materials);

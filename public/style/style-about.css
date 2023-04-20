@@ -1,0 +1,32 @@
+@import "style.css";
+
+body{
+    display: flex;
+    background-color: var(--blue);
+}
+
+main {
+    width: min(90%, 1200px);
+    background-color: var(--white);
+    color: var(--black);
+    font-size: 1rem;
+    padding: 40px;
+    margin: auto;
+    border-radius: 15px;
+}
+
+main > h1 {
+ font-size: 3rem;
+ margin-bottom: 10px;
+}
+
+main > a {
+    color: var(--black);
+    font-weight: 1000;
+    line-height: 40px;
+}
+
+main > img {
+    display: block;
+    margin: auto;
+}

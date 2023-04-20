@@ -41,6 +41,10 @@ router.get("/register", requireLogout, (req, res) => {
   res.sendFile(path.join(__dirname, "../public/views", "register.html"));
 });
 
+router.get("/about", requireLogout, (req, res) => {
+  res.sendFile(path.join(__dirname, "../public/views", "about.html"));
+});
+
 router.post("/register", requireLogout, (req, res) => {
   if(req.body.username == undefined){
     res.redirect("/register");

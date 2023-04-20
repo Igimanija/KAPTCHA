@@ -1,7 +1,6 @@
 .playground{
     margin-top: 40px;
-    border: 1px solid orange;
-    height: 300px;
+    height: 240px;
     aspect-ratio: 3/1;
     margin: auto;
     position: relative;
@@ -43,9 +42,8 @@
   display: inline-block;
   position: relative;
   width: 100%;
-  height: 98px;
   vertical-align: middle;
-  top: 236px;
+  top: 172px;
 }
 
 .road > svg {

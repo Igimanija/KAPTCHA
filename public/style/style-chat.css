@@ -1,0 +1,42 @@
+@import "style.css";
+
+.chat{
+    background-color: blue;
+    width: 380px;
+    height: 500px;
+    border-radius: 15px 0 0 15px;
+    overflow: hidden;
+}
+
+.chat > textarea {
+    width: 100%;
+    height: 95%;
+    padding: 8px;
+    font-size: 1.1rem;
+    border: 0;
+    resize: none;
+    
+}
+
+.write{
+    height: 5%;
+    width: 100%;
+    display: flex;
+}
+.write > input{
+    flex-basis: 80%;
+    font-size: 1rem;
+    padding: 0 10px;
+    border: 0;
+    border-top: 1px solid var(--black);
+}
+
+.write > button {
+    flex-basis: 20%;
+    border-radius: 0;
+    border: 0;
+    background-color: var(--black);
+    color: var(--white);
+    font-size: 1rem;
+}
+
