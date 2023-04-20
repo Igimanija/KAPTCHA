@@ -48,6 +48,7 @@ body {
     border: rgba(246, 255, 248, 0.4) 1px solid;
     padding: 5px 10px;
     border-radius: 40px;
+    line-height: 40px;
 }
 
 .game{
