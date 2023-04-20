@@ -61,6 +61,9 @@ module.exports = (io) => {
             }
 
             game_rooms.get(room_id).turn++;
+            if(game_rooms.get(room_id).usedQ.length == num_q){
+                game_rooms.get(room_id).usedQ = [-1];
+            }
             const next_q = getNewNum(game_rooms.get(room_id).usedQ);
             io.emit('my-turn', next_player.username, next_q, room_id);
         });

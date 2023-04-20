@@ -1,14 +1,14 @@
-let checked_item;
+let checked_item = undefined;
 // Set the initial timer value in milliseconds
 let timerValue = 30000;
+let timerInterval;
 
 // Get the timer element, restart button element, and start button element
 const timerElement = document.getElementById("timer");
-function restartTimer() {
-    timerValue = 30000;
-    startTimer();
-}
+
 function startTimer() {
+    clearInterval(timerInterval);
+    timerValue = 30000;
     // Start the timer interval
     timerInterval = setInterval(() => {
         // Decrement the timer value by 10 milliseconds
@@ -22,15 +22,6 @@ function startTimer() {
 
         // Update the timer element with the new time
         timerElement.innerHTML = timeString;
-
-        // Check if the timer has reached zero
-        if (timerValue <= 0) {
-            // Stop the timer interval
-            clearInterval(timerInterval);
-
-            // Display a message when the timer is done
-            restartTimer()
-        }
     }, 10);
 }
 
