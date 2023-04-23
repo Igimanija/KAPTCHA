@@ -45,12 +45,13 @@ socket.on("logged", (check, room_id) => {
     return;
   }
   if (check === false) {
-
+    clearInterval(answerinterval);
+    clearInterval(timerInterval);
     swal({
-      title: "Good job!",
-      text: "Player has disconnected. You have won!",
-      icon: "success",
-      button: "Aww yiss!",
+      title: "Bad News!",
+      text: "Player has disconnected. The game has ended!",
+      icon: "info",
+      button: "To lobby!",
     }).then(() => {
       location.href = "lobby";
 
@@ -96,8 +97,12 @@ socket.on("end-game", (room_id, player) => {
   if (room_id !== get_my_room()) {
     return;
   }
+  console.log("logging", myinterval, answerinterval, timerInterval);
   clearInterval(myinterval);
-  clearInterval(answerinterval);
+  setTimeout(() => {
+    clearInterval(answerinterval);
+  clearInterval(timerInterval);
+  }, 100);
   USERNAME_PROMISE.then((username) => {
     fetch(`/end_game/${get_my_room()}&${player}`, {
       method: "POST",
@@ -151,6 +156,7 @@ magic.addEventListener("click", (e) => {
   //console.log(checked_item);
   USERNAME_PROMISE.then((username) => {
     socket.emit("answer", get_my_room(), username, checked_item);
+    checked_item = undefined;
   });
 });
 
