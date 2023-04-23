@@ -1,174 +1,321 @@
 <html lang="en">
-
-<head>
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Room</title>
-  <link rel="stylesheet" href="../style/style-kap.css" />
-  <link rel="stylesheet" href="../style/style-playground.css" />
-  <link rel="stylesheet" href="../style/style-chat.css">
-  <link rel="stylesheet" href="../style/style-room.css">
-  <script src="../scripts/socket.js"></script>
-</head>
-<body>
-  <div class="clients">
-    <p>Player1: <span id="p1"></span></p>
-    <p>Trophies: <span id="t1"></span></p>
-    <p>Player2: <span id="p2"></span></p>
-    <p>Trophies: <span id="t2"></span></p>
-  </div>
-
-  <div class="chat">
-    <textarea id="textarea" readonly></textarea>
-    <div class="write">
-      <input type="text" id="message_input" />
-      <button onclick="send()">Send</button>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Room</title>
+    <link rel="stylesheet" href="../style/style-kap.css" />
+    <link rel="stylesheet" href="../style/style-playground.css" />
+    <link rel="stylesheet" href="../style/style-chat.css" />
+    <link rel="stylesheet" href="../style/style-room.css" />
+    <!-- <script src="../scripts/socket.js"></script> -->
+  </head>
+  <body>
+    <div class="clients">
+      <p>Player1: <span id="p1"></span></p>
+      <p>Trophies: <span id="t1"></span></p>
+      <p>Player2: <span id="p2"></span></p>
+      <p>Trophies: <span id="t2"></span></p>
     </div>
-  </div>
 
-  <!-- <div class="game"></div> -->
-  <div class="captcha">
-    <div class="question">
-      <p>Select the squares with the right answer</p>
-      <h2 id="question">Please wait while the other player joins</h2>
-    </div>
-    <div class="options">
-      <div class="item">
-        <p>1</p>
-      </div>
-      <div class="item">
-        <p>2</p>
-      </div>
-      <div class="item">
-        <p>3</p>
-      </div>
-      <div class="item">
-        <p>4</p>
-      </div>
-      <div class="item">
-        <p>5</p>
-      </div>
-      <div class="item">
-        <p>6</p>
-      </div>
-      <div class="item">
-        <p>7</p>
-      </div>
-      <div class="item">
-        <p>8</p>
-      </div>
-      <div class="item">
-        <p>9</p>
+    <div class="chat">
+      <textarea id="textarea" readonly></textarea>
+      <div class="write">
+        <input type="text" id="message_input" />
+        <button onclick="send()">Send</button>
       </div>
     </div>
-    <div class="commands">
-      <button id="magic">Verify</button>
-    </div>
-  </div>
 
-  <div class="playground">
-    <div id="timer">30</div>
-    <!-- players-->
-    <div class="players">
-      <svg viewBox="0 0 172 354" fill="none" id="player_red">
-        <rect width="172" height="354" fill="#F14949" />
-        <rect x="41" y="48" width="58" height="42" fill="#D9D9D9" />
-        <rect x="70" y="60" width="20" height="19" fill="black" />
-        <rect x="106" y="48" width="58" height="42" fill="#D9D9D9" />
-        <rect x="135" y="60" width="20" height="19" fill="black" />
-        <path
-          d="M68.269 166.431C70.5749 153.364 76.7753 142.13 87.4297 134.619C93.6604 130.227 101.427 122.872 108.863 126.144C120.917 131.448 133.608 133.535 137.419 147.147C138.945 152.595 138.542 162.641 142.332 166.431"
-          stroke="white" stroke-width="3" stroke-linecap="round" />
-      </svg>
-
-      <svg viewBox="0 0 172 354" fill="none" id="player_blue">
-        <rect width="172" height="354" fill="#6799C8" />
-        <rect x="41" y="48" width="58" height="42" fill="#D9D9D9" />
-        <rect x="70" y="60" width="20" height="19" fill="black" />
-        <rect x="106" y="48" width="58" height="42" fill="#D9D9D9" />
-        <rect x="135" y="60" width="20" height="19" fill="black" />
-        <path
-          d="M69.0974 129.952C70.1165 140.142 83.5113 153.39 91.6972 158.324C102.174 164.639 121.164 167.963 131.615 159.184C139.276 152.749 146.745 147.544 148.626 137.198C149.366 133.129 149.793 129.722 149.793 125.53"
-          stroke="white" stroke-width="3" stroke-linecap="round" />
-      </svg>
+    <!-- <div class="game"></div> -->
+    <div class="captcha">
+      <div class="question">
+        <p>Select the square with the right answer</p>
+        <h2 id="question">Please wait while the other player joins</h2>
+      </div>
+      <div class="options">
+        <div class="item">
+          <p>1
+          </p>
+        </div>
+        <div class="item">
+          <p>2</p>
+        </div>
+        <div class="item">
+          <p>3</p>
+        </div>
+        <div class="item">
+          <p>4</p>
+        </div>
+        <div class="item">
+          <p>5</p>
+        </div>
+        <div class="item">
+          <p>6</p>
+        </div>
+        <div class="item">
+          <p>7</p>
+        </div>
+        <div class="item">
+          <p>8</p>
+        </div>
+        <div class="item">
+          <p>9</p>
+        </div>
+      </div>
+      <div class="commands">
+        <button id="magic">Verify</button>
+      </div>
     </div>
-    <!-- road -->
-    <div class="road">
-      <svg viewBox="0 0 1280 88" fill="none">
-        <rect fill="black" />
-        <line x1="131" y1="3" x2="131" y2="85" stroke="white" stroke-width="6" stroke-linecap="square" />
-        <line x1="259" y1="3" x2="259" y2="85" stroke="white" stroke-width="6" stroke-linecap="square" />
-        <line x1="387" y1="3" x2="387" y2="85" stroke="white" stroke-width="6" stroke-linecap="square" />
-        <line x1="515" y1="3" x2="515" y2="85" stroke="white" stroke-width="6" stroke-linecap="square" />
-        <line x1="643" y1="3" x2="643" y2="85" stroke="white" stroke-width="6" stroke-linecap="square" />
-        <line x1="771" y1="3" x2="771" y2="85" stroke="white" stroke-width="6" stroke-linecap="square" />
-        <line x1="899" y1="3" x2="899" y2="85" stroke="white" stroke-width="6" stroke-linecap="square" />
-        <line x1="1027" y1="3" x2="1027" y2="85" stroke="white" stroke-width="6" stroke-linecap="square" />
-        <line x1="1155" y1="3" x2="1155" y2="85" stroke="white" stroke-width="6" stroke-linecap="square" />
-        <path
-          d="M36.8088 54.2847C37.2102 54.2346 34.7526 48.0589 31.593 49.3228C25.8449 51.622 33.5469 61.6464 34.6625 64.9933C35.1574 66.4779 36.2381 73.8445 33.1624 73.6248C30.9724 73.4684 24.8665 65.6564 26.8388 64.6702"
-          stroke="white" stroke-width="3" stroke-linecap="round" />
-        <path
-          d="M47.1944 50.9614C47.1944 56.8884 46.9738 62.7859 46.8021 68.7091C46.7727 69.7223 46.1499 74.1181 47.1944 74.6403"
-          stroke="white" stroke-width="3" stroke-linecap="round" />
-        <path d="M41.7939 49.7151C43.5812 49.7151 53.0537 46.8941 54.2565 49.2997" stroke="white" stroke-width="3"
-          stroke-linecap="round" />
-        <path
-          d="M60.4878 48.8843C59.5773 51.7297 59.6518 54.8487 59.2416 57.7927C58.8292 60.7523 58.2522 63.5704 57.6722 66.4704C57.5268 67.1971 57.8811 71.5454 58.4107 70.4861"
-          stroke="white" stroke-width="3" stroke-linecap="round" />
-        <path
-          d="M61.734 48.4689C62.0182 50.3158 63.219 52.0237 63.8342 53.777C64.9374 56.9212 65.3236 59.9635 65.9805 63.1932C66.4517 65.5098 67.0606 68.506 68.3807 70.4861"
-          stroke="white" stroke-width="3" stroke-linecap="round" />
-        <path d="M59.657 62.1777H67.55" stroke="white" stroke-width="3" stroke-linecap="round" />
-        <path
-          d="M73.7812 48.8843C73.7812 54.3728 74.4064 59.9413 74.6352 65.4318C74.7178 67.4149 75.4429 69.3738 75.4429 71.3169"
-          stroke="white" stroke-width="3" stroke-linecap="round" />
-        <path
-          d="M75.0275 51.3768C75.2171 49.6699 76.9795 48.3799 78.5816 48.4689C82.2596 48.6732 82.6442 53.9141 81.4203 56.3618C80.9612 57.28 78.9904 58.6484 78.8355 59.5006C78.5642 60.9925 80.3443 63.4122 81.0049 64.5779C81.6633 65.7399 82.1314 66.5501 83.1281 67.3935C83.6909 67.8697 84.7263 68.282 84.9975 68.8244"
-          stroke="white" stroke-width="3" stroke-linecap="round" />
-        <path
-          d="M93.3059 46.3918C93.6513 51.2278 94.3956 55.9886 94.5752 60.8392C94.725 64.8835 95.7984 68.9588 95.7984 72.9786"
-          stroke="white" stroke-width="3" stroke-linecap="round" />
-        <path
-          d="M84.1666 48.4689C84.3941 46.6493 94.0206 46.493 95.5445 46.4149C97.2944 46.3251 100.109 46.9798 101.614 45.9764"
-          stroke="white" stroke-width="3" stroke-linecap="round" />
-        <path
-          d="M1190.01 45.9763C1188.22 45.9763 1183.63 45.1092 1182.93 47.1072C1181.43 51.3546 1182.92 56.0868 1183.99 60.3083C1184.73 63.2458 1186.27 66.6084 1186.27 69.6552"
-          stroke="white" stroke-width="3" stroke-linecap="round" />
-        <path d="M1183.37 57.1927C1185.48 57.1927 1187.5 56.7773 1189.6 56.7773" stroke="white" stroke-width="3"
-          stroke-linecap="round" />
-        <path
-          d="M1195.83 45.1455C1195.83 49.8837 1196.99 54.4784 1197.81 59.1313C1198.3 61.8569 1199.15 65.2006 1199.15 67.9936"
-          stroke="white" stroke-width="3" stroke-linecap="round" />
-        <path
-          d="M1204.14 47.2226C1204.39 52.6089 1205.61 58.1459 1206.42 63.4701C1206.74 65.5368 1207.46 71.7458 1207.46 69.6552"
-          stroke="white" stroke-width="3" stroke-linecap="round" />
-        <path
-          d="M1204.55 49.2997C1204.8 50.6316 1205.87 52.1669 1206.65 53.2231C1208.43 55.6104 1210.02 57.9798 1211.62 60.493C1212.49 61.8617 1214.21 65.9165 1216.18 65.9165"
-          stroke="white" stroke-width="3" stroke-linecap="round" />
-        <path
-          d="M1214.11 45.9764C1214.11 50.3068 1215.37 54.3586 1215.77 58.6467C1215.86 59.5954 1215.6 64.5875 1216.6 65.0857"
-          stroke="white" stroke-width="3" stroke-linecap="round" />
-        <path d="M1222.42 45.561C1223.05 51.9365 1224.49 71.0776 1224.49 64.6703" stroke="white" stroke-width="3"
-          stroke-linecap="round" />
-        <path
-          d="M1234.88 50.1305C1234.88 48.8579 1234.33 46.4445 1232.8 47.4303C1228.29 50.3317 1231.66 55.6933 1233.77 59.2698C1234.7 60.8469 1238.98 65.0884 1236.72 67.3474C1234.72 69.3508 1230.82 63.1029 1229.89 62.1777"
-          stroke="white" stroke-width="3" stroke-linecap="round" />
-        <path d="M1243.19 48.4689C1243.5 55.0833 1246.09 61.7908 1246.09 68.409" stroke="white" stroke-width="3"
-          stroke-linecap="round" />
-        <path
-          d="M1250.25 48.4689C1250.66 54.2597 1251.73 60.1389 1252.42 65.9165C1252.66 67.9936 1253.16 74.2394 1253.16 72.1478"
-          stroke="white" stroke-width="3" stroke-linecap="round" />
-        <path d="M1244.85 61.7623C1246.51 61.7623 1252.79 61.0256 1253.57 62.5931" stroke="white" stroke-width="3"
-          stroke-linecap="round" />
-      </svg>
-    </div>
-  </div>
-  <script src="../scripts/sweetalert.js"></script>
-  <script src="../scripts/playground.js"></script>
-  <script src="../scripts/kaptcha.js"></script>
-  <script src="../scripts/clientSocket.js"></script>
-</body>
 
+    <div class="playground">
+      <div id="timer">30</div>
+      <!-- players-->
+      <div class="players">
+        <svg viewBox="0 0 172 354" fill="none" id="player_red">
+          <rect width="172" height="354" fill="#F14949" />
+          <rect x="41" y="48" width="58" height="42" fill="#D9D9D9" />
+          <rect x="70" y="60" width="20" height="19" fill="black" />
+          <rect x="106" y="48" width="58" height="42" fill="#D9D9D9" />
+          <rect x="135" y="60" width="20" height="19" fill="black" />
+          <path
+            d="M68.269 166.431C70.5749 153.364 76.7753 142.13 87.4297 134.619C93.6604 130.227 101.427 122.872 108.863 126.144C120.917 131.448 133.608 133.535 137.419 147.147C138.945 152.595 138.542 162.641 142.332 166.431"
+            stroke="white"
+            stroke-width="3"
+            stroke-linecap="round"
+          />
+        </svg>
+
+        <svg viewBox="0 0 172 354" fill="none" id="player_blue">
+          <rect width="172" height="354" fill="#6799C8" />
+          <rect x="41" y="48" width="58" height="42" fill="#D9D9D9" />
+          <rect x="70" y="60" width="20" height="19" fill="black" />
+          <rect x="106" y="48" width="58" height="42" fill="#D9D9D9" />
+          <rect x="135" y="60" width="20" height="19" fill="black" />
+          <path
+            d="M69.0974 129.952C70.1165 140.142 83.5113 153.39 91.6972 158.324C102.174 164.639 121.164 167.963 131.615 159.184C139.276 152.749 146.745 147.544 148.626 137.198C149.366 133.129 149.793 129.722 149.793 125.53"
+            stroke="white"
+            stroke-width="3"
+            stroke-linecap="round"
+          />
+        </svg>
+      </div>
+      <!-- road -->
+      <div class="road">
+        <svg viewBox="0 0 1280 88" fill="none">
+          <rect fill="black" />
+          <line
+            x1="131"
+            y1="3"
+            x2="131"
+            y2="85"
+            stroke="white"
+            stroke-width="6"
+            stroke-linecap="square"
+          />
+          <line
+            x1="259"
+            y1="3"
+            x2="259"
+            y2="85"
+            stroke="white"
+            stroke-width="6"
+            stroke-linecap="square"
+          />
+          <line
+            x1="387"
+            y1="3"
+            x2="387"
+            y2="85"
+            stroke="white"
+            stroke-width="6"
+            stroke-linecap="square"
+          />
+          <line
+            x1="515"
+            y1="3"
+            x2="515"
+            y2="85"
+            stroke="white"
+            stroke-width="6"
+            stroke-linecap="square"
+          />
+          <line
+            x1="643"
+            y1="3"
+            x2="643"
+            y2="85"
+            stroke="white"
+            stroke-width="6"
+            stroke-linecap="square"
+          />
+          <line
+            x1="771"
+            y1="3"
+            x2="771"
+            y2="85"
+            stroke="white"
+            stroke-width="6"
+            stroke-linecap="square"
+          />
+          <line
+            x1="899"
+            y1="3"
+            x2="899"
+            y2="85"
+            stroke="white"
+            stroke-width="6"
+            stroke-linecap="square"
+          />
+          <line
+            x1="1027"
+            y1="3"
+            x2="1027"
+            y2="85"
+            stroke="white"
+            stroke-width="6"
+            stroke-linecap="square"
+          />
+          <line
+            x1="1155"
+            y1="3"
+            x2="1155"
+            y2="85"
+            stroke="white"
+            stroke-width="6"
+            stroke-linecap="square"
+          />
+          <path
+            d="M36.8088 54.2847C37.2102 54.2346 34.7526 48.0589 31.593 49.3228C25.8449 51.622 33.5469 61.6464 34.6625 64.9933C35.1574 66.4779 36.2381 73.8445 33.1624 73.6248C30.9724 73.4684 24.8665 65.6564 26.8388 64.6702"
+            stroke="white"
+            stroke-width="3"
+            stroke-linecap="round"
+          />
+          <path
+            d="M47.1944 50.9614C47.1944 56.8884 46.9738 62.7859 46.8021 68.7091C46.7727 69.7223 46.1499 74.1181 47.1944 74.6403"
+            stroke="white"
+            stroke-width="3"
+            stroke-linecap="round"
+          />
+          <path
+            d="M41.7939 49.7151C43.5812 49.7151 53.0537 46.8941 54.2565 49.2997"
+            stroke="white"
+            stroke-width="3"
+            stroke-linecap="round"
+          />
+          <path
+            d="M60.4878 48.8843C59.5773 51.7297 59.6518 54.8487 59.2416 57.7927C58.8292 60.7523 58.2522 63.5704 57.6722 66.4704C57.5268 67.1971 57.8811 71.5454 58.4107 70.4861"
+            stroke="white"
+            stroke-width="3"
+            stroke-linecap="round"
+          />
+          <path
+            d="M61.734 48.4689C62.0182 50.3158 63.219 52.0237 63.8342 53.777C64.9374 56.9212 65.3236 59.9635 65.9805 63.1932C66.4517 65.5098 67.0606 68.506 68.3807 70.4861"
+            stroke="white"
+            stroke-width="3"
+            stroke-linecap="round"
+          />
+          <path
+            d="M59.657 62.1777H67.55"
+            stroke="white"
+            stroke-width="3"
+            stroke-linecap="round"
+          />
+          <path
+            d="M73.7812 48.8843C73.7812 54.3728 74.4064 59.9413 74.6352 65.4318C74.7178 67.4149 75.4429 69.3738 75.4429 71.3169"
+            stroke="white"
+            stroke-width="3"
+            stroke-linecap="round"
+          />
+          <path
+            d="M75.0275 51.3768C75.2171 49.6699 76.9795 48.3799 78.5816 48.4689C82.2596 48.6732 82.6442 53.9141 81.4203 56.3618C80.9612 57.28 78.9904 58.6484 78.8355 59.5006C78.5642 60.9925 80.3443 63.4122 81.0049 64.5779C81.6633 65.7399 82.1314 66.5501 83.1281 67.3935C83.6909 67.8697 84.7263 68.282 84.9975 68.8244"
+            stroke="white"
+            stroke-width="3"
+            stroke-linecap="round"
+          />
+          <path
+            d="M93.3059 46.3918C93.6513 51.2278 94.3956 55.9886 94.5752 60.8392C94.725 64.8835 95.7984 68.9588 95.7984 72.9786"
+            stroke="white"
+            stroke-width="3"
+            stroke-linecap="round"
+          />
+          <path
+            d="M84.1666 48.4689C84.3941 46.6493 94.0206 46.493 95.5445 46.4149C97.2944 46.3251 100.109 46.9798 101.614 45.9764"
+            stroke="white"
+            stroke-width="3"
+            stroke-linecap="round"
+          />
+          <path
+            d="M1190.01 45.9763C1188.22 45.9763 1183.63 45.1092 1182.93 47.1072C1181.43 51.3546 1182.92 56.0868 1183.99 60.3083C1184.73 63.2458 1186.27 66.6084 1186.27 69.6552"
+            stroke="white"
+            stroke-width="3"
+            stroke-linecap="round"
+          />
+          <path
+            d="M1183.37 57.1927C1185.48 57.1927 1187.5 56.7773 1189.6 56.7773"
+            stroke="white"
+            stroke-width="3"
+            stroke-linecap="round"
+          />
+          <path
+            d="M1195.83 45.1455C1195.83 49.8837 1196.99 54.4784 1197.81 59.1313C1198.3 61.8569 1199.15 65.2006 1199.15 67.9936"
+            stroke="white"
+            stroke-width="3"
+            stroke-linecap="round"
+          />
+          <path
+            d="M1204.14 47.2226C1204.39 52.6089 1205.61 58.1459 1206.42 63.4701C1206.74 65.5368 1207.46 71.7458 1207.46 69.6552"
+            stroke="white"
+            stroke-width="3"
+            stroke-linecap="round"
+          />
+          <path
+            d="M1204.55 49.2997C1204.8 50.6316 1205.87 52.1669 1206.65 53.2231C1208.43 55.6104 1210.02 57.9798 1211.62 60.493C1212.49 61.8617 1214.21 65.9165 1216.18 65.9165"
+            stroke="white"
+            stroke-width="3"
+            stroke-linecap="round"
+          />
+          <path
+            d="M1214.11 45.9764C1214.11 50.3068 1215.37 54.3586 1215.77 58.6467C1215.86 59.5954 1215.6 64.5875 1216.6 65.0857"
+            stroke="white"
+            stroke-width="3"
+            stroke-linecap="round"
+          />
+          <path
+            d="M1222.42 45.561C1223.05 51.9365 1224.49 71.0776 1224.49 64.6703"
+            stroke="white"
+            stroke-width="3"
+            stroke-linecap="round"
+          />
+          <path
+            d="M1234.88 50.1305C1234.88 48.8579 1234.33 46.4445 1232.8 47.4303C1228.29 50.3317 1231.66 55.6933 1233.77 59.2698C1234.7 60.8469 1238.98 65.0884 1236.72 67.3474C1234.72 69.3508 1230.82 63.1029 1229.89 62.1777"
+            stroke="white"
+            stroke-width="3"
+            stroke-linecap="round"
+          />
+          <path
+            d="M1243.19 48.4689C1243.5 55.0833 1246.09 61.7908 1246.09 68.409"
+            stroke="white"
+            stroke-width="3"
+            stroke-linecap="round"
+          />
+          <path
+            d="M1250.25 48.4689C1250.66 54.2597 1251.73 60.1389 1252.42 65.9165C1252.66 67.9936 1253.16 74.2394 1253.16 72.1478"
+            stroke="white"
+            stroke-width="3"
+            stroke-linecap="round"
+          />
+          <path
+            d="M1244.85 61.7623C1246.51 61.7623 1252.79 61.0256 1253.57 62.5931"
+            stroke="white"
+            stroke-width="3"
+            stroke-linecap="round"
+          />
+        </svg>
+      </div>
+    </div>
+    <!-- <script src="../scripts/sweetalert.js"></script> -->
+    <script src="../scripts/playground.js"></script>
+    <script src="../scripts/kaptcha.js"></script>
+    <!-- <script src="../scripts/clientSocket.js"></script> -->
+  </body>
 </html>
