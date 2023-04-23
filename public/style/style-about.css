@@ -11,8 +11,9 @@ main {
     color: var(--black);
     font-size: 1rem;
     padding: 40px;
-    margin: auto;
+    margin: 100px auto;
     border-radius: 15px;
+    box-shadow: 20px 20px 60px #383a7c, -20px -20px 60px #8486ff;
 }
 
 main > h1 {

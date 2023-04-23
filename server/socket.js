@@ -56,7 +56,7 @@ module.exports = (io) => {
                 io.emit('point', room_id, player_turn.username);
             }
 
-            if (player_turn.current_points == 2) {
+            if (player_turn.current_points == 9) {
                 io.emit("end-game", room_id, player_turn.username);
             }
 
